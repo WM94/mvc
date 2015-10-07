@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4366b90703434bc8836bea6276661f41" Name="Diagram1">
+        <EntityTypeShape EntityType="hModel.Kategoria" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Ogloszenie" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Przedmiot" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Uzytkownik" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="hModel.fk_IDKategoria" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDUzytkownik" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDKupujacy" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDPrzedmiot" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDUzytkownikk" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

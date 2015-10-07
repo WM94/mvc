@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.ViewModel
 {
-    public class UzytkownikViewModel
+    public class UserViewModel
     {
         
         public int Id { set; get; }
@@ -18,5 +18,7 @@ namespace DAL.ViewModel
         public string Adres { set; get; }
         public DateTime Data_Rejestracji {set;get;}
         public bool Aktywny {set;get;}
+        public string Nick { set; get; }
+        public string Haslo { set; get; }
     }
 }

@@ -1,0 +1,51 @@
+﻿@model DAL.ViewModel.UserViewModel
+
+@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LogIn</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>UserViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nick)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nick)
+            @Html.ValidationMessageFor(model => model.Nick)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Haslo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Haslo)
+            @Html.ValidationMessageFor(model => model.Haslo)
+        </div>
+
+       
+
+        <p>
+
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Nie pamietasz hasła? szkoda XD", "RemindPassword")
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

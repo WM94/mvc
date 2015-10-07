@@ -1,0 +1,77 @@
+﻿@model DAL.ViewModel.UserViewModel
+
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SignUp</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>UzytkownikViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nick)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nick)
+            @Html.ValidationMessageFor(model => model.Nick)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Imie)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Imie)
+            @Html.ValidationMessageFor(model => model.Imie)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nazwisko)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nazwisko)
+            @Html.ValidationMessageFor(model => model.Nazwisko)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Telefon)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Telefon)
+            @Html.ValidationMessageFor(model => model.Telefon)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Adres)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Adres)
+            @Html.ValidationMessageFor(model => model.Adres)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
