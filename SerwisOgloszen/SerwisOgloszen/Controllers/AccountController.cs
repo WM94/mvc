@@ -37,7 +37,18 @@ namespace SerwisOgloszen.Controllers
         public ActionResult LogIn (UserViewModel user)
         {
             UserService us = new UserService();
-            us.AddUserToDatabase(user);
+            UserViewModel temp;
+            
+            try 
+            {
+                temp = us.LogInUser(user);
+            }
+            catch (DAL.Exceptions.Exceptions.WrongPasswordException){ }
+            catch(DAL.Exceptions.Exceptions.WrongLoginException) {}
+            catch { }
+
+
+            
             return null;
 
 
@@ -58,6 +69,12 @@ namespace SerwisOgloszen.Controllers
 
         [HttpPost]
         public ActionResult RemindPassword(UserViewModel user)
+        {
+            return View();
+
+        }
+        [HttpGet]
+        public ActionResult test()
         {
             return View();
 

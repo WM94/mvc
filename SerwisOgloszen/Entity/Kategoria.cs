@@ -17,13 +17,16 @@ namespace Entity
         public Kategoria()
         {
             this.Przedmiot = new HashSet<Przedmiot>();
+            this.Atrybut = new HashSet<Atrybut>();
             this.Ogloszenie = new HashSet<Ogloszenie>();
         }
     
         public int Id { get; set; }
         public string Nazwa { get; set; }
+        public Nullable<int> Id_Parent { get; set; }
     
         public virtual ICollection<Przedmiot> Przedmiot { get; set; }
+        public virtual ICollection<Atrybut> Atrybut { get; set; }
         public virtual ICollection<Ogloszenie> Ogloszenie { get; set; }
     }
 }

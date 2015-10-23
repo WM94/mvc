@@ -17,6 +17,8 @@ namespace DAL.ViewModel
         public string Telefon { set; get; }
         public string Adres { set; get; }
         public DateTime Data_Rejestracji {set;get;}
+        public DateTime Data_Ostatniego_logowania { set; get; }
+        public DateTime Data_Urodzenia { set; get; }
         public bool Aktywny {set;get;}
         public string Nick { set; get; }
         public string Haslo { set; get; }

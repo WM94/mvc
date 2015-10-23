@@ -1,0 +1,99 @@
+﻿@model DAL.ViewModel.OgloszenieModelView
+
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>OgloszenieModelView</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cena)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cena)
+            @Html.ValidationMessageFor(model => model.Cena)
+        </div>
+
+        <div id="category">
+            <ol  id="category-list" >
+         
+            </ol>
+
+
+        </div> 
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Id_Przedmiot)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Id_Przedmiot)
+            @Html.ValidationMessageFor(model => model.Id_Przedmiot)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+
+<script>
+
+    $(document).ready(function () {
+
+        function GetUsersItems()
+        {
+            debugger;
+         
+            var urlAdres = "@Url.Action("GetAllCategory", "Category")";
+
+            $.ajax({
+                type: "GET",
+                url: urlAdres,
+                success: function (data) {
+                    $.each(data, function (key, value) {
+                        debugger
+                        if (value.IdParent == undefined || value.IdParent == null)
+                        {
+                            $("#category-list").append('<li class=' + value.Id + '>' + value.Nazwa + '</li>');
+                        }
+                        else
+                        {
+                            var item = $("#category-list li[class=" + value.IdParent + "]");
+
+                            if (item.children().length == 0)
+                            {
+                                item.append('<ol class=' + value.IdParent + '> </ol>');
+                            }
+
+                            $("#category-list ol[class=" + value.IdParent + "]").append('<li class=' + value.Id + '>' + value.Nazwa + '</li>');
+                        }
+                       
+                    })
+                     
+
+                },
+                error: function (error) {
+                    alert("error");
+
+                }
+            });
+
+
+        }
+
+        GetUsersItems();
+
+
+
+    });
+</script>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

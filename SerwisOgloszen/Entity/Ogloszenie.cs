@@ -14,6 +14,11 @@ namespace Entity
     
     public partial class Ogloszenie
     {
+        public Ogloszenie()
+        {
+            this.Kategoria = new HashSet<Kategoria>();
+        }
+    
         public int Id { get; set; }
         public int Cena { get; set; }
         public System.DateTime Data_Wystawienia { get; set; }
@@ -22,9 +27,9 @@ namespace Entity
         public Nullable<int> Id_Kupujący { get; set; }
         public int Id_Przedmiot { get; set; }
     
-        public virtual Kategoria Kategoria { get; set; }
         public virtual Uzytkownik Uzytkownik { get; set; }
         public virtual Przedmiot Przedmiot { get; set; }
         public virtual Uzytkownik Uzytkownik1 { get; set; }
+        public virtual ICollection<Kategoria> Kategoria { get; set; }
     }
 }

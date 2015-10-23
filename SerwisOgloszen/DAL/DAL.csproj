@@ -53,9 +53,11 @@
   <ItemGroup>
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdvertService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModel\KategoriaViewModel.cs" />
-    <Compile Include="ViewModel\Ogloszenie.cs" />
+    <Compile Include="ViewModel\OgloszenieViewModel.cs" />
     <Compile Include="ViewModel\PrzemiotViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
@@ -64,9 +66,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entity\Entity.csproj">
-      <Project>{90abeda2-2b05-4df5-997a-6f1f8d3e869c}</Project>
-      <Name>Entity</Name>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{517d6277-498a-4b67-af14-bcd3e2006b83}</Project>
+      <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

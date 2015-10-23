@@ -29,7 +29,9 @@ namespace Entity
         public System.DateTime Data_Rejestracji { get; set; }
         public bool Aktywny { get; set; }
         public string Nick { get; set; }
-        public string Hasło { get; set; }
+        public string Haslo { get; set; }
+        public System.DateTime Data_Urodzenia { get; set; }
+        public System.DateTime Data_Ostatniego_Logowania { get; set; }
     
         public virtual ICollection<Ogloszenie> Ogloszenie { get; set; }
         public virtual ICollection<Ogloszenie> Ogloszenie1 { get; set; }

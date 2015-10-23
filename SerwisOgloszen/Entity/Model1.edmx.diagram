@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="997209168fc54b4496e2b1590070bd59" Name="Diagram1">
+        <EntityTypeShape EntityType="hModel.Atrybut" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Kategoria" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Niedozwolone_Wyrazenia" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Ogloszenie" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Przedmiot" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Uzytkownik" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Atrybut_Wartosc" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="hModel.fk_IDArtybut" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDKategoria" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDKupujacy" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDPrzedmiot" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.fk_IDUzytkownikk" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.Atrybut_Kategoria" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.Ogloszenie_kategoria" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

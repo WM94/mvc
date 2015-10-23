@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.ViewModel
 {
-    public class Ogloszenie
+    public class OgloszenieModelView
     {
         public int id { set; get; }
         public int Cena { set; get; }
@@ -15,5 +15,7 @@ namespace DAL.ViewModel
         public int Id_Uzytkownika { set; get; }
         public int Id_Kupujacy { set; get; }
         public int Id_Przedmiot { set; get;  }
+       
+
     }
 }

@@ -16,5 +16,11 @@ namespace SerwisOgloszen.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult test()
+        {
+            return View();
+        }
+
     }
 }

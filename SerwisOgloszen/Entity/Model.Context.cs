@@ -13,10 +13,10 @@ namespace Entity
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class hEntities2 : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public hEntities2()
+            : base("name=hEntities2")
         {
         }
     
@@ -25,9 +25,12 @@ namespace Entity
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Atrybut> Atrybut { get; set; }
         public virtual DbSet<Kategoria> Kategoria { get; set; }
+        public virtual DbSet<Niedozwolone_Wyrazenia> Niedozwolone_Wyrazenia { get; set; }
         public virtual DbSet<Ogloszenie> Ogloszenie { get; set; }
         public virtual DbSet<Przedmiot> Przedmiot { get; set; }
         public virtual DbSet<Uzytkownik> Uzytkownik { get; set; }
+        public virtual DbSet<Atrybut_Wartosc> Atrybut_Wartosc { get; set; }
     }
 }

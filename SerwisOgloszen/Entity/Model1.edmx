@@ -1,0 +1,579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="hModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Atrybut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'h.dbo.Atrybut_Kategoria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Atrybut_Kategoria">
+          <Key>
+            <PropertyRef Name="Id_Atrybut" />
+            <PropertyRef Name="Id_Kategoria " />
+          </Key>
+          <Property Name="Id_Atrybut" Type="int" Nullable="false" />
+          <Property Name="Id_Kategoria " Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'h.dbo.Atrybut_Wartosc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Atrybut_Wartosc">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Wartosc" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Wartosc" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Id_Parent" Type="int" />
+        </EntityType>
+        <EntityType Name="Niedozwolone_Wyrazenia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Wartosc" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogloszenie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cena" Type="int" Nullable="false" />
+          <Property Name="Data_Wystawienia" Type="datetime" Nullable="false" />
+          <Property Name="Data_Zakonczenia" Type="datetime" />
+          <Property Name="Id_Uzytkownik" Type="int" Nullable="false" />
+          <Property Name="Id_Kupujący" Type="int" />
+          <Property Name="Id_Przedmiot" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'h.dbo.Ogloszenie_kategoria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Ogloszenie_kategoria">
+          <Key>
+            <PropertyRef Name="Id_Ogloszenie" />
+            <PropertyRef Name="Id_Kategoria " />
+          </Key>
+          <Property Name="Id_Ogloszenie" Type="int" Nullable="false" />
+          <Property Name="Id_Kategoria " Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Przedmiot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Kategoria" Type="int" />
+        </EntityType>
+        <EntityType Name="Uzytkownik">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nazwisko" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adres_Zamieszkania" Type="nchar" MaxLength="10" />
+          <Property Name="Data_Rejestracji" Type="datetime" Nullable="false" />
+          <Property Name="Aktywny" Type="bit" Nullable="false" />
+          <Property Name="Nick" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Haslo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Data_Urodzenia" Type="datetime" Nullable="false" />
+          <Property Name="Data_Ostatniego_Logowania" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Ogloszeni__Id_Og__06CD04F7">
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="1" />
+          <End Role="Ogloszenie_kategoria" Type="Self.Ogloszenie_kategoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogloszenie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie_kategoria">
+              <PropertyRef Name="Id_Ogloszenie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDArtybut">
+          <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
+          <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atrybut">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atrybut_Wartosc">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDAtrubut">
+          <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
+          <End Role="Atrybut_Kategoria" Type="Self.Atrybut_Kategoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atrybut">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atrybut_Kategoria">
+              <PropertyRef Name="Id_Atrybut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDKategoria">
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
+          <End Role="Przedmiot" Type="Self.Przedmiot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Przedmiot">
+              <PropertyRef Name="Id_Kategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDKategoriaa">
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="1" />
+          <End Role="Ogloszenie_kategoria" Type="Self.Ogloszenie_kategoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie_kategoria">
+              <PropertyRef Name="Id_Kategoria " />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDKategoriaaa">
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="1" />
+          <End Role="Atrybut_Kategoria" Type="Self.Atrybut_Kategoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atrybut_Kategoria">
+              <PropertyRef Name="Id_Kategoria " />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDKupujacy">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="0..1" />
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie">
+              <PropertyRef Name="Id_Kupujący" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDPrzedmiot">
+          <End Role="Przedmiot" Type="Self.Przedmiot" Multiplicity="1" />
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Przedmiot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie">
+              <PropertyRef Name="Id_Przedmiot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDUzytkownikk">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie">
+              <PropertyRef Name="Id_Uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hModelStoreContainer">
+          <EntitySet Name="Atrybut" EntityType="Self.Atrybut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategoria" EntityType="Self.Kategoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Niedozwolone_Wyrazenia" EntityType="Self.Niedozwolone_Wyrazenia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogloszenie" EntityType="Self.Ogloszenie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Przedmiot" EntityType="Self.Przedmiot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Atrybut_Kategoria" EntityType="Self.Atrybut_Kategoria" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Atrybut_Kategoria].[Id_Atrybut] AS [Id_Atrybut], 
+    [Atrybut_Kategoria].[Id_Kategoria ] AS [Id_Kategoria ]
+    FROM [dbo].[Atrybut_Kategoria] AS [Atrybut_Kategoria]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Atrybut_Wartosc" EntityType="Self.Atrybut_Wartosc" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Atrybut_Wartosc].[Id] AS [Id], 
+    [Atrybut_Wartosc].[Wartosc] AS [Wartosc]
+    FROM [dbo].[Atrybut_Wartosc] AS [Atrybut_Wartosc]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Ogloszenie_kategoria" EntityType="Self.Ogloszenie_kategoria" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Ogloszenie_kategoria].[Id_Ogloszenie] AS [Id_Ogloszenie], 
+    [Ogloszenie_kategoria].[Id_Kategoria ] AS [Id_Kategoria ]
+    FROM [dbo].[Ogloszenie_kategoria] AS [Ogloszenie_kategoria]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Ogloszeni__Id_Og__06CD04F7" Association="Self.FK__Ogloszeni__Id_Og__06CD04F7">
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+            <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDArtybut" Association="Self.fk_IDArtybut">
+            <End Role="Atrybut" EntitySet="Atrybut" />
+            <End Role="Atrybut_Wartosc" EntitySet="Atrybut_Wartosc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDAtrubut" Association="Self.fk_IDAtrubut">
+            <End Role="Atrybut" EntitySet="Atrybut" />
+            <End Role="Atrybut_Kategoria" EntitySet="Atrybut_Kategoria" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDKategoria" Association="Self.fk_IDKategoria">
+            <End Role="Kategoria" EntitySet="Kategoria" />
+            <End Role="Przedmiot" EntitySet="Przedmiot" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDKategoriaa" Association="Self.fk_IDKategoriaa">
+            <End Role="Kategoria" EntitySet="Kategoria" />
+            <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDKategoriaaa" Association="Self.fk_IDKategoriaaa">
+            <End Role="Kategoria" EntitySet="Kategoria" />
+            <End Role="Atrybut_Kategoria" EntitySet="Atrybut_Kategoria" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDKupujacy" Association="Self.fk_IDKupujacy">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDPrzedmiot" Association="Self.fk_IDPrzedmiot">
+            <End Role="Przedmiot" EntitySet="Przedmiot" />
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDUzytkownikk" Association="Self.fk_IDUzytkownikk">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Atrybut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Atrybut_Wartosc" Relationship="Self.fk_IDArtybut" FromRole="Atrybut" ToRole="Atrybut_Wartosc" />
+          <NavigationProperty Name="Kategoria" Relationship="Self.Atrybut_Kategoria" FromRole="Atrybut" ToRole="Kategoria" />
+        </EntityType>
+        <EntityType Name="Kategoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Id_Parent" Type="Int32" />
+          <NavigationProperty Name="Przedmiot" Relationship="Self.fk_IDKategoria" FromRole="Kategoria" ToRole="Przedmiot" />
+          <NavigationProperty Name="Atrybut" Relationship="Self.Atrybut_Kategoria" FromRole="Kategoria" ToRole="Atrybut" />
+          <NavigationProperty Name="Ogloszenie" Relationship="Self.Ogloszenie_kategoria" FromRole="Kategoria" ToRole="Ogloszenie" />
+        </EntityType>
+        <EntityType Name="Niedozwolone_Wyrazenia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Wartosc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogloszenie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cena" Type="Int32" Nullable="false" />
+          <Property Name="Data_Wystawienia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Data_Zakonczenia" Type="DateTime" Precision="3" />
+          <Property Name="Id_Uzytkownik" Type="Int32" Nullable="false" />
+          <Property Name="Id_Kupujący" Type="Int32" />
+          <Property Name="Id_Przedmiot" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.fk_IDKupujacy" FromRole="Ogloszenie" ToRole="Uzytkownik" />
+          <NavigationProperty Name="Przedmiot" Relationship="Self.fk_IDPrzedmiot" FromRole="Ogloszenie" ToRole="Przedmiot" />
+          <NavigationProperty Name="Uzytkownik1" Relationship="Self.fk_IDUzytkownikk" FromRole="Ogloszenie" ToRole="Uzytkownik" />
+          <NavigationProperty Name="Kategoria" Relationship="Self.Ogloszenie_kategoria" FromRole="Ogloszenie" ToRole="Kategoria" />
+        </EntityType>
+        <EntityType Name="Przedmiot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_Kategoria" Type="Int32" />
+          <NavigationProperty Name="Kategoria" Relationship="Self.fk_IDKategoria" FromRole="Przedmiot" ToRole="Kategoria" />
+          <NavigationProperty Name="Ogloszenie" Relationship="Self.fk_IDPrzedmiot" FromRole="Przedmiot" ToRole="Ogloszenie" />
+        </EntityType>
+        <EntityType Name="Uzytkownik">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adres_Zamieszkania" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Data_Rejestracji" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Aktywny" Type="Boolean" Nullable="false" />
+          <Property Name="Nick" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Haslo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Data_Urodzenia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Data_Ostatniego_Logowania" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Ogloszenie" Relationship="Self.fk_IDKupujacy" FromRole="Uzytkownik" ToRole="Ogloszenie" />
+          <NavigationProperty Name="Ogloszenie1" Relationship="Self.fk_IDUzytkownikk" FromRole="Uzytkownik" ToRole="Ogloszenie" />
+        </EntityType>
+        <EntityType Name="Atrybut_Wartosc">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Wartosc" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Wartosc" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Atrybut" Relationship="Self.fk_IDArtybut" FromRole="Atrybut_Wartosc" ToRole="Atrybut" />
+        </EntityType>
+        <Association Name="fk_IDArtybut">
+          <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
+          <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atrybut">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atrybut_Wartosc">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDKategoria">
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
+          <End Role="Przedmiot" Type="Self.Przedmiot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Przedmiot">
+              <PropertyRef Name="Id_Kategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDKupujacy">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="0..1" />
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie">
+              <PropertyRef Name="Id_Kupujący" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDPrzedmiot">
+          <End Role="Przedmiot" Type="Self.Przedmiot" Multiplicity="1" />
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Przedmiot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie">
+              <PropertyRef Name="Id_Przedmiot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDUzytkownikk">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ogloszenie">
+              <PropertyRef Name="Id_Uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Atrybut_Kategoria">
+          <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="*" />
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="*" />
+        </Association>
+        <Association Name="Ogloszenie_kategoria">
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="*" />
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="hEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Atrybut" EntityType="Self.Atrybut" />
+          <EntitySet Name="Kategoria" EntityType="Self.Kategoria" />
+          <EntitySet Name="Niedozwolone_Wyrazenia" EntityType="Self.Niedozwolone_Wyrazenia" />
+          <EntitySet Name="Ogloszenie" EntityType="Self.Ogloszenie" />
+          <EntitySet Name="Przedmiot" EntityType="Self.Przedmiot" />
+          <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" />
+          <EntitySet Name="Atrybut_Wartosc" EntityType="Self.Atrybut_Wartosc" />
+          <AssociationSet Name="fk_IDArtybut" Association="Self.fk_IDArtybut">
+            <End Role="Atrybut" EntitySet="Atrybut" />
+            <End Role="Atrybut_Wartosc" EntitySet="Atrybut_Wartosc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDKategoria" Association="Self.fk_IDKategoria">
+            <End Role="Kategoria" EntitySet="Kategoria" />
+            <End Role="Przedmiot" EntitySet="Przedmiot" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDKupujacy" Association="Self.fk_IDKupujacy">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDPrzedmiot" Association="Self.fk_IDPrzedmiot">
+            <End Role="Przedmiot" EntitySet="Przedmiot" />
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDUzytkownikk" Association="Self.fk_IDUzytkownikk">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+          </AssociationSet>
+          <AssociationSet Name="Atrybut_Kategoria" Association="Self.Atrybut_Kategoria">
+            <End Role="Atrybut" EntitySet="Atrybut" />
+            <End Role="Kategoria" EntitySet="Kategoria" />
+          </AssociationSet>
+          <AssociationSet Name="Ogloszenie_kategoria" Association="Self.Ogloszenie_kategoria">
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+            <End Role="Kategoria" EntitySet="Kategoria" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hModelStoreContainer" CdmEntityContainer="hEntities1">
+          <EntitySetMapping Name="Atrybut">
+            <EntityTypeMapping TypeName="hModel.Atrybut">
+              <MappingFragment StoreEntitySet="Atrybut">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategoria">
+            <EntityTypeMapping TypeName="hModel.Kategoria">
+              <MappingFragment StoreEntitySet="Kategoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Id_Parent" ColumnName="Id_Parent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Niedozwolone_Wyrazenia">
+            <EntityTypeMapping TypeName="hModel.Niedozwolone_Wyrazenia">
+              <MappingFragment StoreEntitySet="Niedozwolone_Wyrazenia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Wartosc" ColumnName="Wartosc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogloszenie">
+            <EntityTypeMapping TypeName="hModel.Ogloszenie">
+              <MappingFragment StoreEntitySet="Ogloszenie">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Cena" ColumnName="Cena" />
+                <ScalarProperty Name="Data_Wystawienia" ColumnName="Data_Wystawienia" />
+                <ScalarProperty Name="Data_Zakonczenia" ColumnName="Data_Zakonczenia" />
+                <ScalarProperty Name="Id_Uzytkownik" ColumnName="Id_Uzytkownik" />
+                <ScalarProperty Name="Id_Kupujący" ColumnName="Id_Kupujący" />
+                <ScalarProperty Name="Id_Przedmiot" ColumnName="Id_Przedmiot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Przedmiot">
+            <EntityTypeMapping TypeName="hModel.Przedmiot">
+              <MappingFragment StoreEntitySet="Przedmiot">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Id_Kategoria" ColumnName="Id_Kategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uzytkownik">
+            <EntityTypeMapping TypeName="hModel.Uzytkownik">
+              <MappingFragment StoreEntitySet="Uzytkownik">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Adres_Zamieszkania" ColumnName="Adres_Zamieszkania" />
+                <ScalarProperty Name="Data_Rejestracji" ColumnName="Data_Rejestracji" />
+                <ScalarProperty Name="Aktywny" ColumnName="Aktywny" />
+                <ScalarProperty Name="Nick" ColumnName="Nick" />
+                <ScalarProperty Name="Haslo" ColumnName="Haslo" />
+                <ScalarProperty Name="Data_Urodzenia" ColumnName="Data_Urodzenia" />
+                <ScalarProperty Name="Data_Ostatniego_Logowania" ColumnName="Data_Ostatniego_Logowania" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Atrybut_Wartosc">
+            <EntityTypeMapping TypeName="hModel.Atrybut_Wartosc">
+              <MappingFragment StoreEntitySet="Atrybut_Wartosc">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Wartosc" ColumnName="Wartosc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Atrybut_Kategoria" TypeName="hModel.Atrybut_Kategoria" StoreEntitySet="Atrybut_Kategoria">
+            <EndProperty Name="Atrybut">
+              <ScalarProperty Name="Id" ColumnName="Id_Atrybut" />
+            </EndProperty>
+            <EndProperty Name="Kategoria">
+              <ScalarProperty Name="Id" ColumnName="Id_Kategoria " />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Ogloszenie_kategoria" TypeName="hModel.Ogloszenie_kategoria" StoreEntitySet="Ogloszenie_kategoria">
+            <EndProperty Name="Ogloszenie">
+              <ScalarProperty Name="Id" ColumnName="Id_Ogloszenie" />
+            </EndProperty>
+            <EndProperty Name="Kategoria">
+              <ScalarProperty Name="Id" ColumnName="Id_Kategoria " />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

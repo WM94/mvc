@@ -1,6 +1,6 @@
 ﻿using DAL.Exceptions;
 using DAL.ViewModel;
-using Entity;
+using Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +11,12 @@ namespace DAL.Services
     {
         public IEnumerable<UserViewModel> GetAllUsers()
         {
-            var context = new Entities();
+            var context = new hEntities();
 
             var list = (from user in context.Uzytkownik
                         select new UserViewModel
                         {
+                             
                             Adres = user.Adres_Zamieszkania,
                             Aktywny = user.Aktywny,
                             Data_Rejestracji = user.Data_Rejestracji,
@@ -31,17 +32,21 @@ namespace DAL.Services
 
         public bool AddUserToDatabase(UserViewModel user)
         {
-            var context = new Entities();
+            var context = new hEntities();
             var use = new Uzytkownik
             {
+                Haslo=user.Haslo,
                 Nick = user.Nick,
                 Adres_Zamieszkania = user.Adres,
-                Aktywny = user.Aktywny,
+                Aktywny = true,
                 Data_Rejestracji = DateTime.Now,
                 Email = user.Email,
                 Imie = user.Imie,
                 Nazwisko = user.Nazwisko,
-                Telefon = user.Telefon
+                Telefon = user.Telefon,
+                Data_Ostatniego_Logowania= DateTime.Now,
+                Data_Urodzenia=user.Data_Urodzenia
+                   
             };
             context.Uzytkownik.Add(use);
 
@@ -51,32 +56,39 @@ namespace DAL.Services
 
         public UserViewModel LogInUser(UserViewModel user)
         {
-            var context = new Entities();
+            var context = new hEntities();
+            UserViewModel temp;
 
-            UserViewModel userLogin = (from u in context.Uzytkownik
-                            where u.Nick == user.Nick
-                            select new UserViewModel
-                            {
-                                Haslo= u.Hasło,
-                                Nick = u.Nick,
-                                Adres = u.Adres_Zamieszkania,
-                                Email = u.Email,
-                                Imie = u.Imie,
-                                Nazwisko = u.Nazwisko,
-                                Telefon = u.Telefon
-                            }).Single();
+            Uzytkownik userLogin = context.Uzytkownik.FirstOrDefault(uk => uk.Nick == user.Nick);
 
-            if( userLogin==null)
+
+
+            if (userLogin == null)
             {
                 throw new DAL.Exceptions.Exceptions.WrongLoginException();
             }
-
-            if (userLogin.Haslo!= user.Haslo)
+           
+            if(userLogin.Haslo==user.Haslo)
+            {
+                  temp=  new UserViewModel
+                            {
+                                Haslo = userLogin.Haslo,
+                                Nick = userLogin.Nick,
+                                Adres = userLogin.Adres_Zamieszkania,
+                                Email = userLogin.Email,
+                                Imie = userLogin.Imie,
+                                Nazwisko = userLogin.Nazwisko,
+                                Telefon = userLogin.Telefon
+                                  
+                            };
+            }
+            else
             {
                 throw new DAL.Exceptions.Exceptions.WrongPasswordException();
             }
+   
 
-            return userLogin;
+            return temp;
         }
 
         public void RemindPassword(UserViewModel user)
@@ -89,13 +101,13 @@ namespace DAL.Services
 
         public bool CheckIfUserExistsByNickOrEmail (UserViewModel user)
         {
-            var context = new Entities();
+            var context = new hEntities();
 
             var ExistUser = (from u in context.Uzytkownik
                              where ( (u.Nick!=null && u.Nick == user.Nick) || (u.Email!=null && u.Email== user.Nick) )
                              select new UserViewModel
                                        {
-                                           Haslo = u.Hasło,
+                                           Haslo = u.Haslo,
                                            Nick = u.Nick,
                                            Adres = u.Adres_Zamieszkania,
                                            Email = u.Email,

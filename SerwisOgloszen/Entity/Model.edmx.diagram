@@ -4,17 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4366b90703434bc8836bea6276661f41" Name="Diagram1">
-        <EntityTypeShape EntityType="hModel.Kategoria" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="hModel.Ogloszenie" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="hModel.Przedmiot" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="hModel.Uzytkownik" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+      <Diagram DiagramId="f18ef04773324b318b98c93621976011" Name="Diagram1">
+        <EntityTypeShape EntityType="hModel.Atrybut" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Kategoria" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Niedozwolone_Wyrazenia" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Ogloszenie" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Przedmiot" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Uzytkownik" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="hModel.Atrybut_Wartosc" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="hModel.fk_IDArtybut" ManuallyRouted="false" />
         <AssociationConnector Association="hModel.fk_IDKategoria" ManuallyRouted="false" />
-        <AssociationConnector Association="hModel.fk_IDUzytkownik" ManuallyRouted="false" />
         <AssociationConnector Association="hModel.fk_IDKupujacy" ManuallyRouted="false" />
         <AssociationConnector Association="hModel.fk_IDPrzedmiot" ManuallyRouted="false" />
         <AssociationConnector Association="hModel.fk_IDUzytkownikk" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.Kategoria_Atrybut" ManuallyRouted="false" />
+        <AssociationConnector Association="hModel.Ogloszenie_kategoria" ManuallyRouted="false" />
       </Diagram>
+      <Diagram DiagramId="59a42f5ebadc45e5b7986a107a8c356b" Name="Diagram2" />
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
