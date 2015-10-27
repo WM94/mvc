@@ -15,6 +15,7 @@ namespace DAL.ViewModel
         public int Id_Uzytkownika { set; get; }
         public int Id_Kupujacy { set; get; }
         public int Id_Przedmiot { set; get;  }
+        public bool? Czy_Kupiony { set; get; }
        
 
     }

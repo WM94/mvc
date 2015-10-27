@@ -72,6 +72,7 @@ namespace DAL.Services
             {
                   temp=  new UserViewModel
                             {
+                                 Id=userLogin.Id,
                                 Haslo = userLogin.Haslo,
                                 Nick = userLogin.Nick,
                                 Adres = userLogin.Adres_Zamieszkania,

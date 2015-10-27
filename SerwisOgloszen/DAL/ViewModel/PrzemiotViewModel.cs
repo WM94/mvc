@@ -12,6 +12,7 @@ namespace DAL.ViewModel
         public string Nazwa { set; get; }
 
         public string Opis { set; get; }
-        public int Id_Kategoria { set; get; }
+        public int Id_Uzytkownik { set; get; }
+
     }
 }

@@ -19,15 +19,18 @@ namespace SerwisOgloszen.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddAdvert()
+        public ActionResult AddAdvertToDatabase(int id)
         {
             return View();
 
         }
-        [HttpPost]
-        public void AddAdvert(OgloszenieModelView item)
+
+
+
+        [HttpGet]
+        public ActionResult AddAdvert( )
         {
-        
+            return View();
 
         }
 

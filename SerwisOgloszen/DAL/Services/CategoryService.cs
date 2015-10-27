@@ -20,7 +20,7 @@ namespace DAL.Services
             foreach (var item in category)
             {
                
-                list.Add( new KategoriaViewModel { Id=item[0].Id , Nazwa=item[0].Nazwa , IdParent=item[0].Id_Parent} );
+                list.Add( new KategoriaViewModel { Id=item[0].Id , Nazwa=item[0].Nazwa , IdParent=item[0].Id_Parent, MainParent=item[0].Main_Parent} );
             }
 
             list = list.OrderBy(x => x.Id).ToList();
@@ -29,13 +29,13 @@ namespace DAL.Services
             
         }
 
-        public List<Kategoria> GetCategoryForItem(PrzemiotViewModel item)
-        {
-            var context = new hEntities();
-            var list = context.Kategoria.Where(x => item.Id_Kategoria==x.Id).ToList();
-            return list;
+        //public List<Kategoria> GetCategoryForItem(PrzemiotViewModel item)
+        //{
+        //    var context = new hEntities();
+        //    var list = context.Kategoria.Where(x => item.Id_Kategoria == x.Id).ToList();
+        //    return list;
 
 
-        }
+        //}
     }
 }

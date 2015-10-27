@@ -22,10 +22,9 @@ namespace Database
         public int Id { get; set; }
         public string Nazwa { get; set; }
         public string Opis { get; set; }
-        public Nullable<int> Id_Kategoria { get; set; }
         public int Id_Uzytkownik { get; set; }
+        public Nullable<bool> Czy_Kupiony { get; set; }
     
-        public virtual Kategoria Kategoria { get; set; }
         public virtual ICollection<Ogloszenie> Ogloszenie { get; set; }
         public virtual Uzytkownik Uzytkownik { get; set; }
     }

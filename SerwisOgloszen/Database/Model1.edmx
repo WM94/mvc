@@ -36,6 +36,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Id_Parent" Type="int" />
+          <Property Name="Main_Parent" Type="int" />
         </EntityType>
         <EntityType Name="Kategoria_Atrybut">
           <Key>
@@ -79,8 +80,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Opis" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Id_Kategoria" Type="int" />
           <Property Name="Id_Uzytkownik" Type="int" Nullable="false" />
+          <Property Name="Czy_Kupiony" Type="bit" />
         </EntityType>
         <EntityType Name="Uzytkownik">
           <Key>
@@ -111,6 +112,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errors Found During Generation:
+warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been omitted from the storage model. Column 'Id_Ogloszenie' of table 'hModel.Store.Ogloszenie_kategoria' is a foreign key participating in multiple relationships. A one-to-one Entity Model will not validate since data inconsistency is possible.
         <Association Name="FK__Ogloszeni__Id_Og__2739D489">
           <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="1" />
           <End Role="Ogloszenie_kategoria" Type="Self.Ogloszenie_kategoria" Multiplicity="*" />
@@ -122,7 +125,7 @@
               <PropertyRef Name="Id_Ogloszenie" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
+        </Association>-->
         <Association Name="fk_IDArtybut">
           <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
           <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="0..1" />
@@ -168,18 +171,6 @@
             </Principal>
             <Dependent Role="Kategoria_Atrybut">
               <PropertyRef Name="Id_Atrybut" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_IDKategoria">
-          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
-          <End Role="Przedmiot" Type="Self.Przedmiot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kategoria">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Przedmiot">
-              <PropertyRef Name="Id_Kategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -270,10 +261,6 @@
             <End Role="Ogloszenie" EntitySet="Ogloszenie" />
             <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ogloszeni__Id_Og__2739D489" Association="Self.FK__Ogloszeni__Id_Og__2739D489">
-            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
-            <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
-          </AssociationSet>
           <AssociationSet Name="fk_IDArtybut" Association="Self.fk_IDArtybut">
             <End Role="Atrybut" EntitySet="Atrybut" />
             <End Role="Atrybut_Wartosc" EntitySet="Atrybut_Wartosc" />
@@ -289,10 +276,6 @@
           <AssociationSet Name="fk_IDAtrubut_" Association="Self.fk_IDAtrubut_">
             <End Role="Atrybut" EntitySet="Atrybut" />
             <End Role="Kategoria_Atrybut" EntitySet="Kategoria_Atrybut" />
-          </AssociationSet>
-          <AssociationSet Name="fk_IDKategoria" Association="Self.fk_IDKategoria">
-            <End Role="Kategoria" EntitySet="Kategoria" />
-            <End Role="Przedmiot" EntitySet="Przedmiot" />
           </AssociationSet>
           <AssociationSet Name="fk_IDKategoriaa" Association="Self.fk_IDKategoriaa">
             <End Role="Kategoria" EntitySet="Kategoria" />
@@ -349,9 +332,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id_Parent" Type="Int32" />
-          <NavigationProperty Name="Przedmiot" Relationship="Self.fk_IDKategoria" FromRole="Kategoria" ToRole="Przedmiot" />
           <NavigationProperty Name="Ogloszenie_kategoria" Relationship="Self.fk_IDKategoriaa" FromRole="Kategoria" ToRole="Ogloszenie_kategoria" />
           <NavigationProperty Name="Kategoria_Atrybut" Relationship="Self.fk_IDKategoriaaa_" FromRole="Kategoria" ToRole="Kategoria_Atrybut" />
+          <Property Name="Main_Parent" Type="Int16" />
         </EntityType>
         <EntityType Name="Kategoria_Atrybut">
           <Key>
@@ -406,11 +389,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Opis" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Id_Kategoria" Type="Int32" />
           <Property Name="Id_Uzytkownik" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Kategoria" Relationship="Self.fk_IDKategoria" FromRole="Przedmiot" ToRole="Kategoria" />
           <NavigationProperty Name="Ogloszenie" Relationship="Self.fk_IDPrzedmiot" FromRole="Przedmiot" ToRole="Ogloszenie" />
           <NavigationProperty Name="Uzytkownik" Relationship="Self.fk_IDUzytkownik" FromRole="Przedmiot" ToRole="Uzytkownik" />
+          <Property Name="Czy_Kupiony" Type="Boolean" />
         </EntityType>
         <EntityType Name="Uzytkownik">
           <Key>
@@ -453,18 +435,6 @@
             </Principal>
             <Dependent Role="Kategoria_Atrybut">
               <PropertyRef Name="Id_Atrybut" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_IDKategoria">
-          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
-          <End Role="Przedmiot" Type="Self.Przedmiot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kategoria">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Przedmiot">
-              <PropertyRef Name="Id_Kategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -582,10 +552,6 @@
             <End Role="Atrybut" EntitySet="Atrybut" />
             <End Role="Kategoria_Atrybut" EntitySet="Kategoria_Atrybut" />
           </AssociationSet>
-          <AssociationSet Name="fk_IDKategoria" Association="Self.fk_IDKategoria">
-            <End Role="Kategoria" EntitySet="Kategoria" />
-            <End Role="Przedmiot" EntitySet="Przedmiot" />
-          </AssociationSet>
           <AssociationSet Name="fk_IDKategoriaa" Association="Self.fk_IDKategoriaa">
             <End Role="Kategoria" EntitySet="Kategoria" />
             <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
@@ -689,6 +655,7 @@
           <EntitySetMapping Name="Kategoria">
             <EntityTypeMapping TypeName="hModel.Kategoria">
               <MappingFragment StoreEntitySet="Kategoria">
+                <ScalarProperty Name="Main_Parent" ColumnName="Main_Parent" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
                 <ScalarProperty Name="Id_Parent" ColumnName="Id_Parent" />
@@ -737,10 +704,10 @@
           <EntitySetMapping Name="Przedmiot">
             <EntityTypeMapping TypeName="hModel.Przedmiot">
               <MappingFragment StoreEntitySet="Przedmiot">
+                <ScalarProperty Name="Czy_Kupiony" ColumnName="Czy_Kupiony" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
-                <ScalarProperty Name="Id_Kategoria" ColumnName="Id_Kategoria" />
                 <ScalarProperty Name="Id_Uzytkownik" ColumnName="Id_Uzytkownik" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -788,7 +755,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

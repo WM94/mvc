@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SerwisOgloszen.Const;
 
 namespace SerwisOgloszen.Controllers
 {
@@ -37,19 +38,23 @@ namespace SerwisOgloszen.Controllers
         public ActionResult LogIn (UserViewModel user)
         {
             UserService us = new UserService();
-            UserViewModel temp;
+            UserViewModel temp=null;
             
             try 
             {
                 temp = us.LogInUser(user);
             }
+
+
+  
+
             catch (DAL.Exceptions.Exceptions.WrongPasswordException){ }
             catch(DAL.Exceptions.Exceptions.WrongLoginException) {}
             catch { }
+            Session["UserID"] = temp.Id;
 
-
+            return RedirectToAction("Index","Home");
             
-            return null;
 
 
         }

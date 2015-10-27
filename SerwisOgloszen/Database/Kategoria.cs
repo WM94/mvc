@@ -16,7 +16,6 @@ namespace Database
     {
         public Kategoria()
         {
-            this.Przedmiot = new HashSet<Przedmiot>();
             this.Ogloszenie_kategoria = new HashSet<Ogloszenie_kategoria>();
             this.Kategoria_Atrybut = new HashSet<Kategoria_Atrybut>();
         }
@@ -24,8 +23,8 @@ namespace Database
         public int Id { get; set; }
         public string Nazwa { get; set; }
         public Nullable<int> Id_Parent { get; set; }
+        public Nullable<short> Main_Parent { get; set; }
     
-        public virtual ICollection<Przedmiot> Przedmiot { get; set; }
         public virtual ICollection<Ogloszenie_kategoria> Ogloszenie_kategoria { get; set; }
         public virtual ICollection<Kategoria_Atrybut> Kategoria_Atrybut { get; set; }
     }

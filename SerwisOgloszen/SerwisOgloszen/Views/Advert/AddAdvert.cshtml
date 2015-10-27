@@ -19,25 +19,43 @@
             @Html.ValidationMessageFor(model => model.Cena)
         </div>
 
+     
+        <div class="tablediv">
+
+
+
+            <table id="UserItemsTable" class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th> id </th>
+                        <th> Nazwa </th>
+                        <th> Opis </th>
+                        <th> # </th>
+                        <th> # </th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="UserItemsTableBody"></tbody>
+            </table>
+        </div>
+
+        <input id="AddNewItem" type="button" value="Dodaj nowy przedmiot" />
+        <div hidden  id="AddNewItem">
+
+            <input id="Name"  placeholder="wpisz nazwe" type="text" />
+            <textarea maxlength="50" placeholder="Describe yourself here..." id="Description"> </textarea>
+        
+            <input id="AcceptItemButton" type="button" value="Akceptuj" />
+        </div>
+
         <div id="category">
-            <ol  id="category-list" >
-         
-            </ol>
+            <ol id="category-list"></ol>
 
 
         </div> 
-
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Id_Przedmiot)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Id_Przedmiot)
-            @Html.ValidationMessageFor(model => model.Id_Przedmiot)
-        </div>
-
         <p>
-            <input type="submit" value="Create" />
+            <input type="button" id="AddAdvert" value="Dodaj Ogłoszenie" />
         </p>
     </fieldset>
 }
@@ -45,12 +63,81 @@
 
 <script>
 
-    $(document).ready(function () {
+    function ChooseItem(id) {
+        debugger;
+        var x = id;
 
-        function GetUsersItems()
-        {
+     
+    }
+    function RemoveItem(id) {
+        debugger;
+        var x = id;
+    }
+
+    function AddAdvertScope() {
+
+        var self = this;
+
+
+        this.InitButtons = function () {
+            $('#AcceptItemButton').click(AddItemToTable);
+            $('#AddNewItem').click(AddItemToTable);
+            $('#AddAdvert').click(AddAdvert);
+          
+
+        };
+
+        function AddAdvert() {
+
+            var _id = 2;
             debugger;
-         
+            var urlAdres = "@Url.Action("AddAdvertToDatabase", "Advert")";
+
+            $.ajax({
+                type: "GET",
+                url: urlAdres,
+                data : {id:_id},
+                success: function (data) {
+                    debugger
+                
+                },
+                error: function (error) {
+                    alert("error");
+                }
+            });
+
+        };
+
+        function GetRowInTable(id, name,description)
+        {
+            debugger
+            var string = '<tr id=' + id + '> <td> ' + id + '</td><td>' + name + ' </td> <td>' + description + ' </td> <td><input class=\'btn\' value=\'wybierz\' type=\'button\' onclick=\'ChooseItem(' + id + ') \'></input> <input class=\'btn\' value=\'usun\' type=\'button\' onclick=\'RemoveItem(' + id + ') \'></input> </td>  </tr>';
+            return string;
+        }
+        function AddItemToTable() {
+
+            var _name = $('#Name').val();
+            var _desccription = $('#Description').val();
+            debugger
+            var urlAdres = "@Url.Action("AddItemToDatabase", "Item")";
+
+            $.ajax({
+                type: "GET",
+                url: urlAdres,
+                data : {name:_name, description:_desccription },
+                success: function (data) {
+                    debugger
+                    var row = GetRowInTable(data, _name, _desccription);
+                    $("#UserItemsTableBody").append(row);
+                },
+                error: function (error) {
+                    alert("error");
+                }
+            });
+
+        };
+        this.GetCategory = function() {
+          
             var urlAdres = "@Url.Action("GetAllCategory", "Category")";
 
             $.ajax({
@@ -58,39 +145,58 @@
                 url: urlAdres,
                 success: function (data) {
                     $.each(data, function (key, value) {
-                        debugger
-                        if (value.IdParent == undefined || value.IdParent == null)
-                        {
-                            $("#category-list").append('<li class=' + value.Id + '>' + value.Nazwa + '</li>');
-                        }
-                        else
-                        {
-                            var item = $("#category-list li[class=" + value.IdParent + "]");
 
-                            if (item.children().length == 0)
-                            {
+                        if (value.IdParent == undefined || value.IdParent == null) {
+                            $("#category-list").append('<li class=' + value.Id + '><input type="radio"  name=' + value.Id + ' > </input>  <label>' + value.Nazwa + '</label> </li>');
+                          
+                        }
+                        else {
+                            var item = $("#category-list li[class=" + value.IdParent + "]");
+                            var child = item.find("li");
+                            if (child.length == 0) {
                                 item.append('<ol class=' + value.IdParent + '> </ol>');
                             }
 
-                            $("#category-list ol[class=" + value.IdParent + "]").append('<li class=' + value.Id + '>' + value.Nazwa + '</li>');
+                            $("#category-list ol[class=" + value.IdParent + "]").append('<li class=' + value.Id + '><input type="radio"  name=' + value.MainParent + ' > </input>  <label>' + value.Nazwa + '</label> </li>');
                         }
-                       
-                    })
-                     
 
+                    })
                 },
                 error: function (error) {
                     alert("error");
 
                 }
             });
-
-
         }
 
-        GetUsersItems();
+        this.GetUsersItems= function()
+        {
+            var urlAdres = "@Url.Action("GetItemUsersByID", "Item")";
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: urlAdres,
+                success: function (data) {
+                    $.each(data, function (key, value) {              
+                        var row = GetRowInTable(value.Id, value.Nazwa, value.Opis);
+                         $("#UserItemsTableBody").append(row);
+                    })
+                },
+                error: function (error) {
+                    alert("error");
 
+                }
+            });
+        }
+    };
 
+    $(document).ready(function () {
+
+        
+        scope = new AddAdvertScope();
+        scope.InitButtons();
+        scope.GetCategory();
+        scope.GetUsersItems();
 
     });
 </script>

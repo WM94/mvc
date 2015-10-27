@@ -11,5 +11,6 @@ namespace DAL.ViewModel
         public int Id { set; get; }
         public string Nazwa { set; get; }
         public int? IdParent { set; get; }
+        public int? MainParent { set; get; }
     }
 }
