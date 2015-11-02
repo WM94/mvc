@@ -29,8 +29,18 @@ namespace SerwisOgloszen.Controllers
         public ActionResult SignUp(UserViewModel user)
         {
             UserService us = new UserService();
-            us.AddUserToDatabase(user);
-            return null;
+            if (!us.CheckIfUserExistsByNickOrEmail(user))
+            {
+                us.AddUserToDatabase(user);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Podany użytkownik lub email jest już zarejestrowany");
+                return View(user);
+            }
+            
+          
 
 
         }
@@ -48,13 +58,27 @@ namespace SerwisOgloszen.Controllers
 
   
 
-            catch (DAL.Exceptions.Exceptions.WrongPasswordException){ }
-            catch(DAL.Exceptions.Exceptions.WrongLoginException) {}
-            catch { }
+            catch (DAL.Exceptions.Exceptions.WrongPasswordException ex)        
+            {
+                ModelState.AddModelError("",  ex.Message);
+                return View(user);
+
+            }
+            catch(DAL.Exceptions.Exceptions.WrongLoginException ex ) 
+            
+            {
+                ModelState.AddModelError("",  ex.Message);
+                return View(user);
+            }
+            catch {
+
+                return null ;
+            
+            }
             Session["UserID"] = temp.Id;
 
-            return RedirectToAction("Index","Home");
-            
+
+            return RedirectToAction("Index", "Home");
 
 
         }

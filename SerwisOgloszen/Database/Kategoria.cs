@@ -23,7 +23,7 @@ namespace Database
         public int Id { get; set; }
         public string Nazwa { get; set; }
         public Nullable<int> Id_Parent { get; set; }
-        public Nullable<short> Main_Parent { get; set; }
+        public Nullable<int> Main_Parent { get; set; }
     
         public virtual ICollection<Ogloszenie_kategoria> Ogloszenie_kategoria { get; set; }
         public virtual ICollection<Kategoria_Atrybut> Kategoria_Atrybut { get; set; }

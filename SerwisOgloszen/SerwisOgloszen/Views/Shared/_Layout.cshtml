@@ -8,9 +8,78 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
+    @*<ul id="menu">
+       
+ 
+    </ul>*@
+
+    <ul id="menu">
+        <li><a href="@Url.Action("GetAdvertByCategory", "Advert", new {  id=0})"> Wszystkie </a></li>
+
+    </ul>
+
+ 
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>
+
+
 </html>
+
+
+<script>
+
+    var currentPage = 0;
+
+
+    function LayoutScope() {
+
+        var self = this;
+
+        this.GetCategory = function () {
+
+            var urlAdres = "@Url.Action("GetAllCategory", "Category")";
+
+            $.ajax({
+                type: "GET",
+                url: urlAdres,
+                success: function (data) {
+                    $.each(data, function (key, value) {
+
+                        var _id = value.Id;
+                        if (value.IdParent == undefined || value.IdParent == null) {
+                            $("#menu").append('<li class=' + value.Id + '><a href="@Url.Action("GetAdvertByCategory", "Advert")?id='+ _id+ '">'+  value.Nazwa+ '</a></li>');
+
+                        }
+
+
+                    })
+                },
+                error: function (error) {
+                    alert("error");
+
+                }
+            });
+        }
+
+
+    }
+
+
+
+
+
+
+    $(document).ready(function () {
+
+        var sc= new LayoutScope();
+        sc.GetCategory();
+
+
+    });
+
+
+</script>

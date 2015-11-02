@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="hModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="hModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Atrybut">
           <Key>
             <PropertyRef Name="Id" />
@@ -16,9 +16,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id_Atrybut" Type="int" Nullable="false" />
           <Property Name="Wartosc" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Atrybuty_Ogloszenie">
           <Key>
@@ -26,7 +26,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="ID_Atrybut" Type="int" Nullable="false" />
-          <Property Name="Wartosc" Type="varchar" MaxLength="50" />
+          <Property Name="Wartosc" Type="int" />
           <Property Name="Id_Ogloszenie" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Kategoria">
@@ -46,6 +46,13 @@
           <Property Name="Id_Kategoria " Type="int" Nullable="false" />
           <Property Name="niepotrzebne" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="Multimedia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ID_Ogloszenia" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Niedozwolone_Wyrazenia">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +71,10 @@
           <Property Name="Id_Uzytkownik" Type="int" Nullable="false" />
           <Property Name="Id_Kupujący" Type="int" />
           <Property Name="Id_Przedmiot" Type="int" Nullable="false" />
+          <Property Name="Czy_Kupiony" Type="bit" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="URL_Zdjecia" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Ogloszenie_kategoria">
           <Key>
@@ -81,7 +92,7 @@
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Opis" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Id_Uzytkownik" Type="int" Nullable="false" />
-          <Property Name="Czy_Kupiony" Type="bit" />
+          <Property Name="Czy_Kupiony" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Uzytkownik">
           <Key>
@@ -90,15 +101,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Imie" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Nazwisko" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Telefon" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Adres_Zamieszkania" Type="nchar" MaxLength="10" />
+          <Property Name="Adres_Zamieszkania" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Data_Rejestracji" Type="datetime" Nullable="false" />
           <Property Name="Aktywny" Type="bit" Nullable="false" />
           <Property Name="Nick" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Haslo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Data_Urodzenia" Type="datetime" Nullable="false" />
           <Property Name="Data_Ostatniego_Logowania" Type="datetime" Nullable="false" />
+          <Property Name="Is_Admin" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__Ogloszeni__Id_Og__25518C17">
           <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="1" />
@@ -112,8 +124,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been omitted from the storage model. Column 'Id_Ogloszenie' of table 'hModel.Store.Ogloszenie_kategoria' is a foreign key participating in multiple relationships. A one-to-one Entity Model will not validate since data inconsistency is possible.
         <Association Name="FK__Ogloszeni__Id_Og__2739D489">
           <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="1" />
           <End Role="Ogloszenie_kategoria" Type="Self.Ogloszenie_kategoria" Multiplicity="*" />
@@ -125,16 +135,16 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
               <PropertyRef Name="Id_Ogloszenie" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>-->
+        </Association>
         <Association Name="fk_IDArtybut">
           <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
-          <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="0..1" />
+          <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Atrybut">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Atrybut_Wartosc">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Id_Atrybut" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -252,12 +262,17 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <EntitySet Name="Atrybuty_Ogloszenie" EntityType="Self.Atrybuty_Ogloszenie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kategoria" EntityType="Self.Kategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kategoria_Atrybut" EntityType="Self.Kategoria_Atrybut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Multimedia" EntityType="Self.Multimedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Niedozwolone_Wyrazenia" EntityType="Self.Niedozwolone_Wyrazenia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ogloszenie" EntityType="Self.Ogloszenie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ogloszenie_kategoria" EntityType="Self.Ogloszenie_kategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Przedmiot" EntityType="Self.Przedmiot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Ogloszeni__Id_Og__25518C17" Association="Self.FK__Ogloszeni__Id_Og__25518C17">
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+            <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ogloszeni__Id_Og__2739D489" Association="Self.FK__Ogloszeni__Id_Og__2739D489">
             <End Role="Ogloszenie" EntitySet="Ogloszenie" />
             <End Role="Ogloszenie_kategoria" EntitySet="Ogloszenie_kategoria" />
           </AssociationSet>
@@ -302,7 +317,8 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
             <End Role="Ogloszenie" EntitySet="Ogloszenie" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="hModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -313,17 +329,28 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Atrybut_Wartosc" Relationship="Self.fk_IDArtybut" FromRole="Atrybut" ToRole="Atrybut_Wartosc" />
+          <NavigationProperty Name="Atrybuty_Ogloszenie" Relationship="Self.fk_IDArtybutt" FromRole="Atrybut" ToRole="Atrybuty_Ogloszenie" />
           <NavigationProperty Name="Kategoria_Atrybut" Relationship="Self.fk_IDAtrubut_" FromRole="Atrybut" ToRole="Kategoria_Atrybut" />
-          <NavigationProperty Name="Atrybuty_Ogloszenie" Relationship="hModel.fk_IDArtybutt" FromRole="Atrybut" ToRole="Atrybuty_Ogloszenie" />
         </EntityType>
         <EntityType Name="Atrybut_Wartosc">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Atrybut" Type="Int32" Nullable="false" />
           <Property Name="Wartosc" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Atrybut" Relationship="Self.fk_IDArtybut" FromRole="Atrybut_Wartosc" ToRole="Atrybut" />
+        </EntityType>
+        <EntityType Name="Atrybuty_Ogloszenie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ID_Atrybut" Type="Int32" Nullable="false" />
+          <Property Name="Wartosc" Type="Int32" />
+          <Property Name="Id_Ogloszenie" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Atrybut" Relationship="Self.fk_IDArtybutt" FromRole="Atrybuty_Ogloszenie" ToRole="Atrybut" />
+          <NavigationProperty Name="Ogloszenie" Relationship="Self.fk_IDArtybutOgloszenie" FromRole="Atrybuty_Ogloszenie" ToRole="Ogloszenie" />
         </EntityType>
         <EntityType Name="Kategoria">
           <Key>
@@ -332,9 +359,9 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id_Parent" Type="Int32" />
+          <Property Name="Main_Parent" Type="Int32" />
           <NavigationProperty Name="Ogloszenie_kategoria" Relationship="Self.fk_IDKategoriaa" FromRole="Kategoria" ToRole="Ogloszenie_kategoria" />
           <NavigationProperty Name="Kategoria_Atrybut" Relationship="Self.fk_IDKategoriaaa_" FromRole="Kategoria" ToRole="Kategoria_Atrybut" />
-          <Property Name="Main_Parent" Type="Int16" />
         </EntityType>
         <EntityType Name="Kategoria_Atrybut">
           <Key>
@@ -345,6 +372,13 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <Property Name="niepotrzebne" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Atrybut" Relationship="Self.fk_IDAtrubut_" FromRole="Kategoria_Atrybut" ToRole="Atrybut" />
           <NavigationProperty Name="Kategoria" Relationship="Self.fk_IDKategoriaaa_" FromRole="Kategoria_Atrybut" ToRole="Kategoria" />
+        </EntityType>
+        <EntityType Name="Multimedia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ID_Ogloszenia" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Niedozwolone_Wyrazenia">
           <Key>
@@ -364,12 +398,16 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <Property Name="Id_Uzytkownik" Type="Int32" Nullable="false" />
           <Property Name="Id_Kupujący" Type="Int32" />
           <Property Name="Id_Przedmiot" Type="Int32" Nullable="false" />
+          <Property Name="Czy_Kupiony" Type="Boolean" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL_Zdjecia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Atrybuty_Ogloszenie" Relationship="Self.fk_IDArtybutOgloszenie" FromRole="Ogloszenie" ToRole="Atrybuty_Ogloszenie" />
           <NavigationProperty Name="Ogloszenie_kategoria" Relationship="Self.FK__Ogloszeni__Id_Og__25518C17" FromRole="Ogloszenie" ToRole="Ogloszenie_kategoria" />
           <NavigationProperty Name="Ogloszenie_kategoria1" Relationship="Self.FK__Ogloszeni__Id_Og__2739D489" FromRole="Ogloszenie" ToRole="Ogloszenie_kategoria" />
           <NavigationProperty Name="Uzytkownik" Relationship="Self.fk_IDKupujacy" FromRole="Ogloszenie" ToRole="Uzytkownik" />
           <NavigationProperty Name="Przedmiot" Relationship="Self.fk_IDPrzedmiot" FromRole="Ogloszenie" ToRole="Przedmiot" />
           <NavigationProperty Name="Uzytkownik1" Relationship="Self.fk_IDUzytkownikk" FromRole="Ogloszenie" ToRole="Uzytkownik" />
-          <NavigationProperty Name="Atrybuty_Ogloszenie" Relationship="hModel.fk_IDArtybutOgloszenie" FromRole="Ogloszenie" ToRole="Atrybuty_Ogloszenie" />
         </EntityType>
         <EntityType Name="Ogloszenie_kategoria">
           <Key>
@@ -390,9 +428,9 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Opis" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id_Uzytkownik" Type="Int32" Nullable="false" />
+          <Property Name="Czy_Kupiony" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Ogloszenie" Relationship="Self.fk_IDPrzedmiot" FromRole="Przedmiot" ToRole="Ogloszenie" />
           <NavigationProperty Name="Uzytkownik" Relationship="Self.fk_IDUzytkownik" FromRole="Przedmiot" ToRole="Uzytkownik" />
-          <Property Name="Czy_Kupiony" Type="Boolean" />
         </EntityType>
         <EntityType Name="Uzytkownik">
           <Key>
@@ -401,28 +439,41 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Imie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Adres_Zamieszkania" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Adres_Zamieszkania" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Data_Rejestracji" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Aktywny" Type="Boolean" Nullable="false" />
           <Property Name="Nick" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Haslo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Data_Urodzenia" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Data_Ostatniego_Logowania" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Is_Admin" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ogloszenie" Relationship="Self.fk_IDKupujacy" FromRole="Uzytkownik" ToRole="Ogloszenie" />
           <NavigationProperty Name="Ogloszenie1" Relationship="Self.fk_IDUzytkownikk" FromRole="Uzytkownik" ToRole="Ogloszenie" />
           <NavigationProperty Name="Przedmiot" Relationship="Self.fk_IDUzytkownik" FromRole="Uzytkownik" ToRole="Przedmiot" />
         </EntityType>
         <Association Name="fk_IDArtybut">
           <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
-          <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="0..1" />
+          <End Role="Atrybut_Wartosc" Type="Self.Atrybut_Wartosc" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Atrybut">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Atrybut_Wartosc">
+              <PropertyRef Name="Id_Atrybut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDArtybutt">
+          <End Role="Atrybut" Type="Self.Atrybut" Multiplicity="1" />
+          <End Role="Atrybuty_Ogloszenie" Type="Self.Atrybuty_Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atrybut">
               <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atrybuty_Ogloszenie">
+              <PropertyRef Name="ID_Atrybut" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -435,6 +486,18 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
             </Principal>
             <Dependent Role="Kategoria_Atrybut">
               <PropertyRef Name="Id_Atrybut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_IDArtybutOgloszenie">
+          <End Role="Ogloszenie" Type="Self.Ogloszenie" Multiplicity="1" />
+          <End Role="Atrybuty_Ogloszenie" Type="Self.Atrybuty_Ogloszenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogloszenie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atrybuty_Ogloszenie">
+              <PropertyRef Name="Id_Ogloszenie" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -537,8 +600,10 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
         <EntityContainer Name="hEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Atrybut" EntityType="Self.Atrybut" />
           <EntitySet Name="Atrybut_Wartosc" EntityType="Self.Atrybut_Wartosc" />
+          <EntitySet Name="Atrybuty_Ogloszenie" EntityType="Self.Atrybuty_Ogloszenie" />
           <EntitySet Name="Kategoria" EntityType="Self.Kategoria" />
           <EntitySet Name="Kategoria_Atrybut" EntityType="Self.Kategoria_Atrybut" />
+          <EntitySet Name="Multimedia" EntityType="Self.Multimedia" />
           <EntitySet Name="Niedozwolone_Wyrazenia" EntityType="Self.Niedozwolone_Wyrazenia" />
           <EntitySet Name="Ogloszenie" EntityType="Self.Ogloszenie" />
           <EntitySet Name="Ogloszenie_kategoria" EntityType="Self.Ogloszenie_kategoria" />
@@ -548,9 +613,17 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
             <End Role="Atrybut" EntitySet="Atrybut" />
             <End Role="Atrybut_Wartosc" EntitySet="Atrybut_Wartosc" />
           </AssociationSet>
+          <AssociationSet Name="fk_IDArtybutt" Association="Self.fk_IDArtybutt">
+            <End Role="Atrybut" EntitySet="Atrybut" />
+            <End Role="Atrybuty_Ogloszenie" EntitySet="Atrybuty_Ogloszenie" />
+          </AssociationSet>
           <AssociationSet Name="fk_IDAtrubut_" Association="Self.fk_IDAtrubut_">
             <End Role="Atrybut" EntitySet="Atrybut" />
             <End Role="Kategoria_Atrybut" EntitySet="Kategoria_Atrybut" />
+          </AssociationSet>
+          <AssociationSet Name="fk_IDArtybutOgloszenie" Association="Self.fk_IDArtybutOgloszenie">
+            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
+            <End Role="Atrybuty_Ogloszenie" EntitySet="Atrybuty_Ogloszenie" />
           </AssociationSet>
           <AssociationSet Name="fk_IDKategoriaa" Association="Self.fk_IDKategoriaa">
             <End Role="Kategoria" EntitySet="Kategoria" />
@@ -584,51 +657,7 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Przedmiot" EntitySet="Przedmiot" />
           </AssociationSet>
-          <EntitySet Name="Atrybuty_Ogloszenie" EntityType="hModel.Atrybuty_Ogloszenie" />
-          <AssociationSet Name="fk_IDArtybutt" Association="hModel.fk_IDArtybutt">
-            <End Role="Atrybut" EntitySet="Atrybut" />
-            <End Role="Atrybuty_Ogloszenie" EntitySet="Atrybuty_Ogloszenie" />
-          </AssociationSet>
-          <AssociationSet Name="fk_IDArtybutOgloszenie" Association="hModel.fk_IDArtybutOgloszenie">
-            <End Role="Ogloszenie" EntitySet="Ogloszenie" />
-            <End Role="Atrybuty_Ogloszenie" EntitySet="Atrybuty_Ogloszenie" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Atrybuty_Ogloszenie">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ID_Atrybut" Type="Int32" Nullable="false" />
-          <Property Name="Wartosc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Id_Ogloszenie" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Atrybut" Relationship="hModel.fk_IDArtybutt" FromRole="Atrybuty_Ogloszenie" ToRole="Atrybut" />
-          <NavigationProperty Name="Ogloszenie" Relationship="hModel.fk_IDArtybutOgloszenie" FromRole="Atrybuty_Ogloszenie" ToRole="Ogloszenie" />
-        </EntityType>
-        <Association Name="fk_IDArtybutt">
-          <End Type="hModel.Atrybut" Role="Atrybut" Multiplicity="1" />
-          <End Type="hModel.Atrybuty_Ogloszenie" Role="Atrybuty_Ogloszenie" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Atrybut">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Atrybuty_Ogloszenie">
-              <PropertyRef Name="ID_Atrybut" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_IDArtybutOgloszenie">
-          <End Type="hModel.Ogloszenie" Role="Ogloszenie" Multiplicity="1" />
-          <End Type="hModel.Atrybuty_Ogloszenie" Role="Atrybuty_Ogloszenie" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ogloszenie">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Atrybuty_Ogloszenie">
-              <PropertyRef Name="Id_Ogloszenie" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -646,19 +675,29 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <EntitySetMapping Name="Atrybut_Wartosc">
             <EntityTypeMapping TypeName="hModel.Atrybut_Wartosc">
               <MappingFragment StoreEntitySet="Atrybut_Wartosc">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Atrybut" ColumnName="Id_Atrybut" />
                 <ScalarProperty Name="Wartosc" ColumnName="Wartosc" />
-                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Atrybuty_Ogloszenie">
+            <EntityTypeMapping TypeName="hModel.Atrybuty_Ogloszenie">
+              <MappingFragment StoreEntitySet="Atrybuty_Ogloszenie">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ID_Atrybut" ColumnName="ID_Atrybut" />
+                <ScalarProperty Name="Wartosc" ColumnName="Wartosc" />
+                <ScalarProperty Name="Id_Ogloszenie" ColumnName="Id_Ogloszenie" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Kategoria">
             <EntityTypeMapping TypeName="hModel.Kategoria">
               <MappingFragment StoreEntitySet="Kategoria">
-                <ScalarProperty Name="Main_Parent" ColumnName="Main_Parent" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
                 <ScalarProperty Name="Id_Parent" ColumnName="Id_Parent" />
+                <ScalarProperty Name="Main_Parent" ColumnName="Main_Parent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -668,6 +707,14 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
                 <ScalarProperty Name="Id_Atrybut" ColumnName="Id_Atrybut" />
                 <ScalarProperty Name="Id_Kategoria_" ColumnName="Id_Kategoria " />
                 <ScalarProperty Name="niepotrzebne" ColumnName="niepotrzebne" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Multimedia">
+            <EntityTypeMapping TypeName="hModel.Multimedia">
+              <MappingFragment StoreEntitySet="Multimedia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ID_Ogloszenia" ColumnName="ID_Ogloszenia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -689,6 +736,10 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
                 <ScalarProperty Name="Id_Uzytkownik" ColumnName="Id_Uzytkownik" />
                 <ScalarProperty Name="Id_Kupujący" ColumnName="Id_Kupujący" />
                 <ScalarProperty Name="Id_Przedmiot" ColumnName="Id_Przedmiot" />
+                <ScalarProperty Name="Czy_Kupiony" ColumnName="Czy_Kupiony" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="URL_Zdjecia" ColumnName="URL_Zdjecia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -704,11 +755,11 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
           <EntitySetMapping Name="Przedmiot">
             <EntityTypeMapping TypeName="hModel.Przedmiot">
               <MappingFragment StoreEntitySet="Przedmiot">
-                <ScalarProperty Name="Czy_Kupiony" ColumnName="Czy_Kupiony" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
                 <ScalarProperty Name="Id_Uzytkownik" ColumnName="Id_Uzytkownik" />
+                <ScalarProperty Name="Czy_Kupiony" ColumnName="Czy_Kupiony" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -727,16 +778,7 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
                 <ScalarProperty Name="Haslo" ColumnName="Haslo" />
                 <ScalarProperty Name="Data_Urodzenia" ColumnName="Data_Urodzenia" />
                 <ScalarProperty Name="Data_Ostatniego_Logowania" ColumnName="Data_Ostatniego_Logowania" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Atrybuty_Ogloszenie">
-            <EntityTypeMapping TypeName="hModel.Atrybuty_Ogloszenie">
-              <MappingFragment StoreEntitySet="Atrybuty_Ogloszenie">
-                <ScalarProperty Name="Id_Ogloszenie" ColumnName="Id_Ogloszenie" />
-                <ScalarProperty Name="Wartosc" ColumnName="Wartosc" />
-                <ScalarProperty Name="ID_Atrybut" ColumnName="ID_Atrybut" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Is_Admin" ColumnName="Is_Admin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -755,7 +797,7 @@ warning 6037: Foreign key constraint 'FK__Ogloszeni__Id_Og__2739D489' has been o
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

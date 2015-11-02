@@ -33,6 +33,7 @@ namespace Database
         public string Haslo { get; set; }
         public System.DateTime Data_Urodzenia { get; set; }
         public System.DateTime Data_Ostatniego_Logowania { get; set; }
+        public int Is_Admin { get; set; }
     
         public virtual ICollection<Ogloszenie> Ogloszenie { get; set; }
         public virtual ICollection<Ogloszenie> Ogloszenie1 { get; set; }

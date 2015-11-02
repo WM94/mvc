@@ -16,7 +16,7 @@ namespace Database
     {
         public int Id { get; set; }
         public int ID_Atrybut { get; set; }
-        public string Wartosc { get; set; }
+        public Nullable<int> Wartosc { get; set; }
         public int Id_Ogloszenie { get; set; }
     
         public virtual Atrybut Atrybut { get; set; }

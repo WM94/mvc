@@ -12,20 +12,9 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Przedmiot
+    public partial class Multimedia
     {
-        public Przedmiot()
-        {
-            this.Ogloszenie = new HashSet<Ogloszenie>();
-        }
-    
         public int Id { get; set; }
-        public string Nazwa { get; set; }
-        public string Opis { get; set; }
-        public int Id_Uzytkownik { get; set; }
-        public bool Czy_Kupiony { get; set; }
-    
-        public virtual ICollection<Ogloszenie> Ogloszenie { get; set; }
-        public virtual Uzytkownik Uzytkownik { get; set; }
+        public string ID_Ogloszenia { get; set; }
     }
 }

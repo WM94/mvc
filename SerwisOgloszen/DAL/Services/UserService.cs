@@ -104,22 +104,10 @@ namespace DAL.Services
         {
             var context = new hEntities();
 
-            var ExistUser = (from u in context.Uzytkownik
-                             where ( (u.Nick!=null && u.Nick == user.Nick) || (u.Email!=null && u.Email== user.Nick) )
-                             select new UserViewModel
-                                       {
-                                           Haslo = u.Haslo,
-                                           Nick = u.Nick,
-                                           Adres = u.Adres_Zamieszkania,
-                                           Email = u.Email,
-                                           Imie = u.Imie,
-                                           Nazwisko = u.Nazwisko,
-                                           Telefon = u.Telefon
-                                       }).Single();
-
-            if( ExistUser==null)
+            var ExistUser = context.Uzytkownik.Any(x => x.Email.ToLower() == user.Email.ToLower() || x.Nick.ToLower() == user.Nick.ToLower());
+            if( ExistUser==false)
             {
-                throw new DAL.Exceptions.Exceptions.WrongLoginException();
+                return false;
             }
             else
             {

@@ -4,7 +4,12 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-@using (Html.BeginForm()) {
+
+
+
+
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -12,6 +17,7 @@
         <legend>OgloszenieModelView</legend>
 
         <div class="editor-label">
+
             @Html.LabelFor(model => model.Cena)
         </div>
         <div class="editor-field">
@@ -19,7 +25,28 @@
             @Html.ValidationMessageFor(model => model.Cena)
         </div>
 
-     
+        <div class="editor-label">
+
+            @Html.LabelFor(model => model.Nazwa)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nazwa)
+            @Html.ValidationMessageFor(model => model.Nazwa)
+        </div>
+
+        <div class="editor-label">
+
+            @Html.LabelFor(model => model.Opis)
+        </div>
+
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Opis)
+            @Html.ValidationMessageFor(model => model.Opis)
+        </div>
+
+    
+   
+
         <div class="tablediv">
 
 
@@ -41,76 +68,180 @@
         </div>
 
         <input id="AddNewItem" type="button" value="Dodaj nowy przedmiot" />
-        <div hidden  id="AddNewItem">
 
-            <input id="Name"  placeholder="wpisz nazwe" type="text" />
+        <div    id="AddNewItemDiv">
+            <p>Nazwa:</p>
+            <input id="Name" placeholder="wpisz nazwe" type="text" />
+            <p>Opis:</p>
             <textarea maxlength="50" placeholder="Describe yourself here..." id="Description"> </textarea>
-        
+            <br/>
             <input id="AcceptItemButton" type="button" value="Akceptuj" />
         </div>
+
 
         <div id="category">
             <ol id="category-list"></ol>
 
 
-        </div> 
+        </div>
         <p>
             <input type="button" id="AddAdvert" value="Dodaj Ogłoszenie" />
         </p>
+
     </fieldset>
 }
 
+ 
+    <input id="fileUpload" type="file" name="file" />
+    
 
 <script>
 
     function ChooseItem(id) {
-        debugger;
+    
         var x = id;
+        scope.SetChoosenItem(id);
 
-     
+
     }
     function RemoveItem(id) {
-        debugger;
+        
         var x = id;
     }
 
     function AddAdvertScope() {
 
         var self = this;
+        var ChoosenItem = 0;
 
+        this.SetChoosenItem = function(id)
+        {
+            alert("Wybrano przedmiot");
+            ChoosenItem = id;
+        }
+        this.GetChoosenItem = function  () {
+            return ChoosenItem;
+        }
 
         this.InitButtons = function () {
             $('#AcceptItemButton').click(AddItemToTable);
-            $('#AddNewItem').click(AddItemToTable);
+            $('#AddNewItem').click(UnhiddenForm);
             $('#AddAdvert').click(AddAdvert);
-          
+
 
         };
 
-        function AddAdvert() {
+        function UnhiddenForm()
+        {
+        
 
-            var _id = 2;
+            debugger
+            if ($('#AddNewItemDiv').is(':hidden'))
+            {
+                $('#AddNewItemDiv').css('visibility', 'visible');
+                $('#AddNewItem').css('value', 'Ukryj formularz');
+            }
+            else {
+                $('#AddNewItemDiv').css('visibility', 'hidden');
+                $('#AddNewItem').css('value', 'Dodaj nowy przedmiot');
+            }
+       
+        }
+
+        function AddAdvert() {
+        
+            var _category = [];
+            var files = $("#fileUpload").get(0).files;
             debugger;
-            var urlAdres = "@Url.Action("AddAdvertToDatabase", "Advert")";
+            var X= files[0];
+
+
+        
+            if (ChoosenItem == 0) {
+                alert("Wybierz przedmiot");
+                return;
+            }
+
+            $('#category').find('*').each(function () {
+                var item = $(this);
+                if (item.is("input:radio:checked")) {
+
+                    debugger
+                    _category.push(item.val());
+
+                }
+
+            });
+
+            var _advert = 
+            {
+         
+                Cena: $('#Cena').val(),
+                Id_Przedmiot: scope.GetChoosenItem(),
+                Opis :$('#Opis').val(),
+                Nazwa: $('#Nazwa').val(),
+                url_zdjecie: files[0]
+
+            };
+
+            if (_category.length == 0)
+            {
+                alert("Wybierz przynajmniej jedną kategorię");
+                return;
+            }
+
 
             $.ajax({
-                type: "GET",
-                url: urlAdres,
-                data : {id:_id},
-                success: function (data) {
+                type: "POST",
+                contentType: 'application/json',
+                url: "/Advert/AddAdvert",
+                enctype:"multipart/form-data",
+                data: JSON.stringify({ advert :_advert,category:_category }),
+                success: function (result) {
                     debugger
-                
-                },
-                error: function (error) {
-                    alert("error");
+                    if (result.url) {
+
+                         window.location.href = result.url;
+                        // if the server returned a JSON object containing an url 
+                        // property we redirect the browser to that url
+
+
+                        //$.ajax({
+                        //    type: "POST",
+                           
+                        //    url: "/Advert/File",
+                        //    enctype: "multipart/form-data",
+                        //    data: files[0],
+                        //    success: function (result) {
+                        //        debugger
+                        //       // if (result.url) {
+                        //            // if the server returned a JSON object containing an url 
+                        //            // property we redirect the browser to that url
+
+
+                        //           /// window.location.href = result.url;
+                        //        //}
+
+                        //    }
+
+                        //});
+
+
+                     
+                    }
+
                 }
+
             });
 
         };
 
-        function GetRowInTable(id, name,description)
-        {
-            debugger
+
+
+
+
+        function GetRowInTable(id, name, description) {
+
             var string = '<tr id=' + id + '> <td> ' + id + '</td><td>' + name + ' </td> <td>' + description + ' </td> <td><input class=\'btn\' value=\'wybierz\' type=\'button\' onclick=\'ChooseItem(' + id + ') \'></input> <input class=\'btn\' value=\'usun\' type=\'button\' onclick=\'RemoveItem(' + id + ') \'></input> </td>  </tr>';
             return string;
         }
@@ -124,7 +255,7 @@
             $.ajax({
                 type: "GET",
                 url: urlAdres,
-                data : {name:_name, description:_desccription },
+                data: { name: _name, description: _desccription },
                 success: function (data) {
                     debugger
                     var row = GetRowInTable(data, _name, _desccription);
@@ -136,8 +267,8 @@
             });
 
         };
-        this.GetCategory = function() {
-          
+        this.GetCategory = function () {
+
             var urlAdres = "@Url.Action("GetAllCategory", "Category")";
 
             $.ajax({
@@ -147,8 +278,8 @@
                     $.each(data, function (key, value) {
 
                         if (value.IdParent == undefined || value.IdParent == null) {
-                            $("#category-list").append('<li class=' + value.Id + '><input type="radio"  name=' + value.Id + ' > </input>  <label>' + value.Nazwa + '</label> </li>');
-                          
+                            $("#category-list").append('<li class=' + value.Id + '><input type="radio" value=' + value.Id + '  name=' + value.Id + ' > </input>  <label>' + value.Nazwa + '</label> </li>');
+
                         }
                         else {
                             var item = $("#category-list li[class=" + value.IdParent + "]");
@@ -157,7 +288,7 @@
                                 item.append('<ol class=' + value.IdParent + '> </ol>');
                             }
 
-                            $("#category-list ol[class=" + value.IdParent + "]").append('<li class=' + value.Id + '><input type="radio"  name=' + value.MainParent + ' > </input>  <label>' + value.Nazwa + '</label> </li>');
+                            $("#category-list ol[class=" + value.IdParent + "]").append('<li class=' + value.Id + '><input type="radio" value=' + value.Id + '  name=' + value.MainParent + ' > </input>  <label>' + value.Nazwa + '</label> </li>');
                         }
 
                     })
@@ -169,17 +300,16 @@
             });
         }
 
-        this.GetUsersItems= function()
-        {
+        this.GetUsersItems = function () {
             var urlAdres = "@Url.Action("GetItemUsersByID", "Item")";
             debugger;
             $.ajax({
                 type: "GET",
                 url: urlAdres,
                 success: function (data) {
-                    $.each(data, function (key, value) {              
+                    $.each(data, function (key, value) {
                         var row = GetRowInTable(value.Id, value.Nazwa, value.Opis);
-                         $("#UserItemsTableBody").append(row);
+                        $("#UserItemsTableBody").append(row);
                     })
                 },
                 error: function (error) {
@@ -188,11 +318,14 @@
                 }
             });
         }
-    };
+    }
+
+
+
 
     $(document).ready(function () {
 
-        
+
         scope = new AddAdvertScope();
         scope.InitButtons();
         scope.GetCategory();

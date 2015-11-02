@@ -14,9 +14,9 @@ namespace Database
     
     public partial class Atrybut_Wartosc
     {
-        public int Id { get; set; }
+        public int Id_Atrybut { get; set; }
         public string Wartosc { get; set; }
-        public int ID_PK { get; set; }
+        public int Id { get; set; }
     
         public virtual Atrybut Atrybut { get; set; }
     }

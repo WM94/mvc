@@ -27,13 +27,14 @@ namespace Database
     
         public DbSet<Atrybut> Atrybut { get; set; }
         public DbSet<Atrybut_Wartosc> Atrybut_Wartosc { get; set; }
+        public DbSet<Atrybuty_Ogloszenie> Atrybuty_Ogloszenie { get; set; }
         public DbSet<Kategoria> Kategoria { get; set; }
         public DbSet<Kategoria_Atrybut> Kategoria_Atrybut { get; set; }
+        public DbSet<Multimedia> Multimedia { get; set; }
         public DbSet<Niedozwolone_Wyrazenia> Niedozwolone_Wyrazenia { get; set; }
         public DbSet<Ogloszenie> Ogloszenie { get; set; }
         public DbSet<Ogloszenie_kategoria> Ogloszenie_kategoria { get; set; }
         public DbSet<Przedmiot> Przedmiot { get; set; }
         public DbSet<Uzytkownik> Uzytkownik { get; set; }
-        public DbSet<Atrybuty_Ogloszenie> Atrybuty_Ogloszenie { get; set; }
     }
 }

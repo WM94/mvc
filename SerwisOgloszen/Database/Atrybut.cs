@@ -16,15 +16,16 @@ namespace Database
     {
         public Atrybut()
         {
-            this.Kategoria_Atrybut = new HashSet<Kategoria_Atrybut>();
+            this.Atrybut_Wartosc = new HashSet<Atrybut_Wartosc>();
             this.Atrybuty_Ogloszenie = new HashSet<Atrybuty_Ogloszenie>();
+            this.Kategoria_Atrybut = new HashSet<Kategoria_Atrybut>();
         }
     
         public int Id { get; set; }
         public string Nazwa { get; set; }
     
-        public virtual Atrybut_Wartosc Atrybut_Wartosc { get; set; }
-        public virtual ICollection<Kategoria_Atrybut> Kategoria_Atrybut { get; set; }
+        public virtual ICollection<Atrybut_Wartosc> Atrybut_Wartosc { get; set; }
         public virtual ICollection<Atrybuty_Ogloszenie> Atrybuty_Ogloszenie { get; set; }
+        public virtual ICollection<Kategoria_Atrybut> Kategoria_Atrybut { get; set; }
     }
 }

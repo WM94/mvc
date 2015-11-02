@@ -12,7 +12,7 @@ namespace DAL.Exceptions
             
         {
             public WrongPasswordException()
-                : base()
+                : base( "Błędne hasło ")
             {
 
             }
@@ -20,7 +20,7 @@ namespace DAL.Exceptions
         public class WrongLoginException : Exception
         {
             public WrongLoginException()
-                : base()
+                : base("Błedny login")
             {
 
             }

@@ -16,9 +16,9 @@ namespace Database
     {
         public Ogloszenie()
         {
+            this.Atrybuty_Ogloszenie = new HashSet<Atrybuty_Ogloszenie>();
             this.Ogloszenie_kategoria = new HashSet<Ogloszenie_kategoria>();
             this.Ogloszenie_kategoria1 = new HashSet<Ogloszenie_kategoria>();
-            this.Atrybuty_Ogloszenie = new HashSet<Atrybuty_Ogloszenie>();
         }
     
         public int Id { get; set; }
@@ -28,12 +28,16 @@ namespace Database
         public int Id_Uzytkownik { get; set; }
         public Nullable<int> Id_Kupujący { get; set; }
         public int Id_Przedmiot { get; set; }
+        public bool Czy_Kupiony { get; set; }
+        public string Opis { get; set; }
+        public string Nazwa { get; set; }
+        public string URL_Zdjecia { get; set; }
     
+        public virtual ICollection<Atrybuty_Ogloszenie> Atrybuty_Ogloszenie { get; set; }
         public virtual ICollection<Ogloszenie_kategoria> Ogloszenie_kategoria { get; set; }
         public virtual ICollection<Ogloszenie_kategoria> Ogloszenie_kategoria1 { get; set; }
         public virtual Uzytkownik Uzytkownik { get; set; }
         public virtual Przedmiot Przedmiot { get; set; }
         public virtual Uzytkownik Uzytkownik1 { get; set; }
-        public virtual ICollection<Atrybuty_Ogloszenie> Atrybuty_Ogloszenie { get; set; }
     }
 }
