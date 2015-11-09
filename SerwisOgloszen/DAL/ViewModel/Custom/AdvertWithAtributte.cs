@@ -9,7 +9,7 @@ namespace DAL.ViewModel.Custom
     public class AdvertWithAtributte
     {
 
-        public OgloszenieModelView ogl { set; get; }
+        ///public OgloszenieModelView ogl { set; get; }
         public List<AtributteValue> atr { set; get; }
     }
 }

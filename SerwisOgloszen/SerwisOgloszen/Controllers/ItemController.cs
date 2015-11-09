@@ -20,7 +20,12 @@ namespace SerwisOgloszen.Controllers
         [HttpGet]
         public ActionResult GetItemUsersByID()
         {
-            int id = 5;
+            int id = Convert.ToInt16(Session["UserID"]);
+
+            if (id == null || id == 0)
+            {
+                return RedirectToAction("LogIn", "Account");
+            }
             ItemService sv = new ItemService();
             var list = sv.GetItemByUserID(id);
 

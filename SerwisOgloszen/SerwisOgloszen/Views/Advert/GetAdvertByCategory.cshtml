@@ -1,51 +1,62 @@
 ﻿@model  IEnumerable<DAL.ViewModel.Custom.AdvertWithUserViewModel>
-
  
-<table class="table">
+<table class="table .table-condensed .table-hover">
     @*<tr>
-       
+
+            <th>
+               @Html.DisplayNameFor(  model => model.FirstOrDefault().ogloszenie.id)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(  model => Model.FirstOrDefault().ogloszenie.Cena)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(  model => Model.FirstOrDefault().ogloszenie.Nazwa)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor( model => Model.FirstOrDefault().user.Imie)
+                @Html.DisplayNameFor(  model => Model.FirstOrDefault().user.Nazwisko)
+            </th>
+
+            <th></th>
+        </tr>*@
+    <tr>
+
+
         <th>
-           @Html.DisplayNameFor(  model => model.FirstOrDefault().ogloszenie.id)
-   
-        </th>
-        <th>
-            @Html.DisplayNameFor(  model => Model.FirstOrDefault().ogloszenie.Cena)
+            <p> Cena </p>
         </th>
 
         <th>
-            @Html.DisplayNameFor(  model => Model.FirstOrDefault().ogloszenie.Nazwa)
+            <p> Nazwa </p>
         </th>
 
         <th>
-            @Html.DisplayNameFor( model => Model.FirstOrDefault().user.Imie)
-            @Html.DisplayNameFor(  model => Model.FirstOrDefault().user.Nazwisko)
+            <p> Sprzedawca </p>
         </th>
 
-        <th></th>
-    </tr>*@
+    </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ogloszenie.id)
-            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.ogloszenie.id)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ogloszenie.Cena)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ogloszenie.Nazwa)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ogloszenie.Opis)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.user.Imie)
                 @Html.DisplayFor(modelItem => item.user.Nazwisko)
             </td>
-            <td>
-            
-            </td>
+            <td></td>
         </tr>
     }
 

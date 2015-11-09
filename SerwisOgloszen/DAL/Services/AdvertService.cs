@@ -27,7 +27,7 @@ namespace DAL.Services
             return true;
         }
 
-        public bool AddAdvert(OgloszenieModelView ogloszenie, string[] category)
+        public int AddAdvert(OgloszenieModelView ogloszenie, string[] category)
         {
             var context = new hEntities();
             var og = new Ogloszenie
@@ -42,20 +42,21 @@ namespace DAL.Services
 
             };
             context.Ogloszenie.Add(og);
-
+            context.SaveChanges();
+            var id = og.Id;
             foreach (var item in category)
             {
                 var og_cat = new Ogloszenie_kategoria
                    {
                        Id_Kategoria_ = Convert.ToInt32(item),
-                       Id_Ogloszenie = og.Id
+                       Id_Ogloszenie =id
                    };
                 context.Ogloszenie_kategoria.Add(og_cat);
             }
 
             context.SaveChanges();
 
-            return true;
+            return og.Id;
         }
 
 
@@ -132,7 +133,8 @@ namespace DAL.Services
                                        Id_Przedmiot = ogl.Id_Przedmiot,
                                        Id_Kupujacy = ogl.Id_Kupujący,
                                        Czy_Kupiony = ogl.Czy_Kupiony,
-                                       Opis = ogl.Opis
+                                       Opis = ogl.Opis,
+                                       Nazwa=ogl.Nazwa
                                    },
                                    user = new UserViewModel()
                                    {
@@ -207,45 +209,48 @@ namespace DAL.Services
 
             return collection;
         }
-        public List<AdvertWithAtributte> GetAtributteForAdvert(OgloszenieModelView _ogl)
+        public AdvertWithAtributte GetAtributteForAdvert(OgloszenieModelView _ogl)
         {
             var context = new hEntities();
 
-            var collection = (
-
-                              (from cat_ogl in context.Ogloszenie_kategoria                                           
-                               join cat in context.Kategoria on cat_ogl.Id_Kategoria_ equals cat.Id
-                               join cat_atr in context.Kategoria_Atrybut on cat.Id equals cat_atr.Id_Kategoria_
-                               //join atr in context.Atrybut on cat_atr.Id_Atrybut equals atr.Id
-                               
-                               where cat_ogl.Id_Ogloszenie==_ogl.id
-
-                               select new AdvertWithAtributte
-                               {
-
-                                   //ogl = _ogl,
-
-                                   //atr =  from atr in context.Atrybut
-                                   //       where atr.Id=cat_atr.Id_Atrybut
-                                   //       select new AtributteValue()
-                                   //       {
-                                   //            ID_Atrybutu = atr.Id,
-                                   //             Id_Ogloszenia= cat_ogl.ID,
-                                   //              Wartosc =  from atr_val in context.Atrybut_Wartosc
-                                                        
-
-                                   //       }
-                                   
+            AdvertWithAtributte advert = new AdvertWithAtributte();
+            advert.atr = new List<AtributteValue>();
 
 
-                               }
-                               )
+            var category = (from cat_ogl in context.Ogloszenie_kategoria
+                     join cat in context.Kategoria on cat_ogl.Id_Kategoria_ equals cat.Id
+                     join cat_atr in context.Kategoria_Atrybut on cat.Id equals cat_atr.Id_Kategoria_
+                     //join atr in context.Atrybut on cat_atr.Id_Atrybut equals atr.Id
 
+                     where cat_ogl.Id_Ogloszenie == _ogl.id
+                     select cat_atr);
 
+            List<AtributteValue> atributes = new List<AtributteValue>();
 
-            ).Take(100);
+            foreach (var item in category)
+            {
 
-            return collection.ToList();
+                var attribute = (from atr in context.Atrybut
+                          where atr.Id == item.Id_Atrybut
+                          select new AtributteValue
+                          {
+                              ID_Atrybutu = atr.Id,
+                              Id_Ogloszenia = _ogl.id,
+                              Nazwa_atrybutu = atr.Nazwa,
+                              Wartosc = (from atr_val in context.Atrybut_Wartosc
+                                         where atr_val.Id_Atrybut == atr.Id
+                                         select new AtributteValueModelView()
+                                         {
+                                             ID = atr_val.Id,
+                                             Wartosc = atr_val.Wartosc
+                                         }).ToList()
+
+                          }).Single() ;
+
+                advert.atr.Add(attribute);
+                
+            }
+            return advert;
         }
 
         

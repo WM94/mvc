@@ -59,7 +59,8 @@
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModel\AtributteValue.cs" />
-    <Compile Include="ViewModel\Attribute.cs" />
+    <Compile Include="ViewModel\AtributteValueModelView.cs" />
+    <Compile Include="ViewModel\AttributeViewModel.cs" />
     <Compile Include="ViewModel\Custom\AdvertWithAtributte.cs" />
     <Compile Include="ViewModel\Custom\AdvertWithUserViewModel.cs" />
     <Compile Include="ViewModel\KategoriaViewModel.cs" />

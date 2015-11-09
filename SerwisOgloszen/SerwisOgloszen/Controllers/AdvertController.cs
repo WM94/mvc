@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace SerwisOgloszen.Controllers
 {
@@ -55,10 +56,18 @@ namespace SerwisOgloszen.Controllers
                  return RedirectToAction("LogIn", "Account");
              }
              advert.Id_Uzytkownika = Convert.ToInt16(Session["UserID"]);
-             sr.AddAdvert(advert,category);
-             var _url = "/Home/Index";
+             var _id = sr.AddAdvert(advert, category);
 
-             return Json(new { url = _url });
+             advert.id = _id;
+           /// return  RedirectToAction("ChooseAtributte", "Advert", new { adv = advert });
+            // return RedirectToAction("ChooseAtributte", new RouteValueDictionary(advert));
+
+             //return View("test");
+             //return RedirectToAction("test");
+             return RedirectToAction("test", "Advert");
+             //var _url = "/Home/Index";
+
+             //return Json(new { url = _url });
         }
 
           [HttpGet]
@@ -110,8 +119,19 @@ namespace SerwisOgloszen.Controllers
           [HttpGet]
           public ActionResult ChooseAtributte(OgloszenieModelView adv)
           {
+              ModelState.Clear();
+              AdvertService srv = new AdvertService();
+              var item= srv.GetAtributteForAdvert(adv);
 
-              return null;
+              return View();
+
+          }
+          [HttpGet]
+          public ActionResult test()
+          {
+             
+              return View();
+
           }
 
     }

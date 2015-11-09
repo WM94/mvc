@@ -1,11 +1,12 @@
 ﻿@model DAL.ViewModel.OgloszenieModelView
 
-<script src="~/Scripts/jquery-1.8.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-
+@Scripts.Render("~/bundles/jquery")
 
 
 @using (Html.BeginForm())

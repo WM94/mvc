@@ -8,7 +8,9 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+   
 
+    <a href="@Url.Action("Index", "Home")"> <img src="http://www.ogloszenia-drobne.com.pl/images/logo.gif" /></a>
     @*<ul id="menu">
        
  
@@ -23,6 +25,7 @@
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
+  @Styles.Render("~/Content/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 

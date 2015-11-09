@@ -9,7 +9,8 @@ namespace DAL.ViewModel
     public class AtributteValue
     {
         public int ID_Atrybutu { set; get; }
-        public List<int> Wartosc { set; get; }
+        public string Nazwa_atrybutu { set; get; }
+        public List<AtributteValueModelView> Wartosc { set; get; }
         public int Id_Ogloszenia { set; get; }
     }
 }

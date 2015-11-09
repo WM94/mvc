@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.ViewModel
 {
-    public class Attribute
+    public class AttributeViewModel
     {
         public int Id { set; get; }
         public string Nazwa { set; get; }
