@@ -3,6 +3,7 @@
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
     background-color: #fff;
+    margin:10px;
 }
 
 header, footer, nav, section {
@@ -17,15 +18,15 @@ header, footer, nav, section {
     overflow: scroll;
 }
 
-ul#menu {
+ul.menu {
     padding: 0;
 }
 
-ul#menu li {
+ul.menu li {
     display: inline;
 }
 
-ul#menu li a {
+ul.menu li a {
     background-color: black;
     color: white;
     padding: 10px 20px;
@@ -33,7 +34,7 @@ ul#menu li a {
     border-radius: 4px 4px 0 0;
 }
 
-ul#menu li a:hover {
+ul.menu li a:hover {
     background-color: orange;
 }
 .hidden{

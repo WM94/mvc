@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body >
    
 
     <a href="@Url.Action("Index", "Home")"> <img src="http://www.ogloszenia-drobne.com.pl/images/logo.gif" /></a>
@@ -16,16 +16,28 @@
  
     </ul>*@
 
-    <ul id="menu">
+    <ul id="CategoryMenu" class="menu">
         <li><a href="@Url.Action("GetAdvertByCategory", "Advert", new {  id=0})"> Wszystkie </a></li>
 
     </ul>
 
+    <br />
+
+    <ul class="menu">
+        <li><a href="@Url.Action("LogIn", "Account")"> Zaloguj się </a></li>
+        <li><a href="@Url.Action("SignUp", "Account")"> Zarejestruj </a></li>
+        <li><a href="@Url.Action("AddAdvert", "Advert")"> Dodaj ogłoszenie</a></li>
+        <li><a href="@Url.Action("AddAdvert", "Advert")"> Konto </a></li>
+        <li><a href="@Url.Action("LogOut", "Account")"> Wyloguj się </a></li>
+    </ul>
+
+
+  
  
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
-  @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 
@@ -36,6 +48,7 @@
 <script>
 
     var currentPage = 0;
+    var FirstLoad = false;
 
 
     function LayoutScope() {
@@ -54,7 +67,7 @@
 
                         var _id = value.Id;
                         if (value.IdParent == undefined || value.IdParent == null) {
-                            $("#menu").append('<li class=' + value.Id + '><a href="@Url.Action("GetAdvertByCategory", "Advert")?id='+ _id+ '">'+  value.Nazwa+ '</a></li>');
+                            $("#CategoryMenu").append('<li class=' + value.Id + '><a href="@Url.Action("GetAdvertByCategory", "Advert")?id=' + _id + '">' + value.Nazwa + '</a></li>');
 
                         }
 

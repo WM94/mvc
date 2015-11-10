@@ -29,6 +29,24 @@ namespace DAL.Services
             
         }
 
+        public List<KategoriaViewModel> GetChildCategory(int id)
+        {
+            var context = new hEntities();
+            var category = context.Kategoria.Where(x => x.Main_Parent == id).ToList();
+
+            List<KategoriaViewModel> list = new List<KategoriaViewModel>();
+            foreach (var item in category)
+            {
+
+                list.Add(new KategoriaViewModel { Id = item.Id, Nazwa = item.Nazwa, IdParent = item.Id_Parent, MainParent = item.Main_Parent });
+            }
+
+            list = list.OrderBy(x => x.Id).ToList();
+            return list;
+
+
+        }
+
         //public List<Kategoria> GetCategoryForItem(PrzemiotViewModel item)
         //{
         //    var context = new hEntities();

@@ -98,6 +98,29 @@ namespace SerwisOgloszen.Controllers
              
         
         }
+
+
+          [HttpGet]
+          public ActionResult GetAdvertByCategoryAsPartialView(int id)
+          {
+              AdvertService srv = new AdvertService();
+
+              if (id == 0)
+              {
+                  var list = srv.GetLast100ActiveAdverts();
+                  return PartialView(list);
+              }
+              else
+              {
+                  var list = srv.GetLast100ActiveAdvertsByCategory(id);
+                  return PartialView(list);
+
+              }
+
+
+
+
+          }
           [HttpPost]
           public ActionResult File(HttpPostedFileBase file)
           {

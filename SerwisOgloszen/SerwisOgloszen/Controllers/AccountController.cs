@@ -102,6 +102,17 @@ namespace SerwisOgloszen.Controllers
             return View();
 
         }
+
+        [HttpGet]
+        public ActionResult LogOut()
+        {
+            Session["UserID"] = null;
+
+            return RedirectToAction("Index", "Home");
+
+
+        }
+
         [HttpGet]
         public ActionResult test()
         {

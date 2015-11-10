@@ -26,5 +26,13 @@ namespace SerwisOgloszen.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult GetChildCategory(int id)
+        {
+            CategoryService ser = new CategoryService();
+            var category = ser.GetChildCategory(id);
+            return View(category);
+        }
+
     }
 }

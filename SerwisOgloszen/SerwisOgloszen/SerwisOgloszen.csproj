@@ -243,13 +243,15 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Advert\AddAdvert.cshtml" />
-    <Content Include="Views\Advert\GetAdvertByCategory.cshtml" />
+    <Content Include="Views\Shared\GetAdvertByCategory.cshtml" />
     <Content Include="Views\Home\Index.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\ChooseAtributte.cshtml" />
     <Content Include="Views\Advert\test.cshtml" />
     <Content Include="Views\Advert\test2.cshtml" />
+    <Content Include="Views\Shared\GetAdvertByCategoryAsPartialView.cshtml" />
+    <Content Include="Views\Category\GetChildCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
