@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="KCK3.UserControl.EditButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+          >
+
+    <Grid Name="Grid">
+
+        <Grid.Background>
+            <SolidColorBrush Color="Gray" Opacity="0"/>
+        </Grid.Background>
+        <!--<Border  Opacity="1" BorderBrush="Gray" BorderThickness="0.5">-->
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=Grid}" 
+                    Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames 
+Storyboard.TargetProperty="Background.(SolidColorBrush.Opacity)">
+                                        <LinearDoubleKeyFrame Value="0.2" KeyTime="0:0:0.4"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimationUsingKeyFrames 
+Storyboard.TargetProperty="Background.(SolidColorBrush.Opacity)">
+                                        <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.4"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <StackPanel Style="{DynamicResource stackPanelIcon}">
+
+
+            <Image Margin="3" HorizontalAlignment="Center" Style="{DynamicResource buttonIcon }" Source="/img/edit.png">
+            <Image.Triggers>
+                    <EventTrigger RoutedEvent="Control.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard >
+                                <DoubleAnimation Duration="0:0:1" To="1" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Control.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard >
+                                <DoubleAnimation Duration="0:0:1" To="0.8" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+
+            </Image>
+            <TextBlock Margin="3"  HorizontalAlignment="Center">Edytuj</TextBlock>
+        </StackPanel>
+        <!--</Border>-->
+    </Grid>
+    
+      
+     
+</UserControl>
