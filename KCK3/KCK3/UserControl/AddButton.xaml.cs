@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KCK3.EditWindows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,8 +48,22 @@ namespace KCK3.UserControl
 
             if(Action=="AddMail")
             {
-
+                SendingEmail wind = new SendingEmail();
+                wind.ShowDialog();
             }
+
+            if (Action == "AddFaktura")
+            {
+                AddEditFaktura wind = new AddEditFaktura();
+                wind.ShowDialog();
+            }
+
+            if (Action == "AddPracownik")
+            {
+                AddEditPracownik wind = new AddEditPracownik();
+                wind.ShowDialog();
+            }
+ 
 
         }
     }

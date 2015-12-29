@@ -5,7 +5,7 @@
     <Application.Resources>
 
     
-            <!-- Resources scoped at the Application level should be defined here. -->
+            <!-- Resources scoped at the Application level should be defined here. --><!--
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary  Source="ResourceDictionary.xaml"/>
@@ -155,10 +155,24 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-        </ResourceDictionary>
-   
+        </ResourceDictionary>-->
 
-  
 
+       
+            <!--<ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
+                    <ResourceDictionary Source="Themes/MetroDark/MetroDark.MSControls.Toolkit.Implicit.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>-->
+
+ 
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+                    <ResourceDictionary Source="Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+       
     </Application.Resources>
 </Application>

@@ -6,7 +6,8 @@
     xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
   mc:Ignorable="d">
 
-    <FontFamily x:Key="Font "></FontFamily>
+    
+<!--<FontFamily x:Key="Font "></FontFamily>
     <FontFamily x:Key="FontFamily">./#Segoe UI</FontFamily>
 
     <FontWeight x:Key="{x:Static SystemFonts.MenuFontWeightKey}">Normal</FontWeight>
@@ -120,9 +121,9 @@
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
 
-    <!--DataGrid -->
+    
+ 
 
-    <!--Style and template for the resize control on the DataGridColumnHeader.-->
     <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Width" Value="20" />
         <Setter Property="Background" Value="Transparent" />
@@ -136,7 +137,9 @@
         </Setter>
     </Style>
 
-    <!--Style and template for the DataGridColumnHeader.-->
+    
+ 
+
     <Style TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="{DynamicResource NormalBorderBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -219,7 +222,9 @@
         </Setter>        
     </Style>
 
-    <!--Style and template for the DataGridColumnHeadersPresenter.-->
+    
+ 
+
     <Style TargetType="{x:Type DataGridColumnHeadersPresenter}">
         <Setter Property="Template">
             <Setter.Value>
@@ -476,5 +481,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+</Style>-->
+
 </ResourceDictionary>

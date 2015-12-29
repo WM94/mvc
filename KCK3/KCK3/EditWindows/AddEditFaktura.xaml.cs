@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KCK3.UserControl
+namespace KCK3.EditWindows
 {
     /// <summary>
-    /// Interaction logic for Usun.xaml
+    /// Interaction logic for AddEditFaktura.xaml
     /// </summary>
-    public partial class UsunButton  
+    public partial class AddEditFaktura : Window
     {
-        public UsunButton()
+        public AddEditFaktura()
         {
             InitializeComponent();
-        }
-
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Czy napewno chcesz usunąc zaznaczone pozycje? ", "Potwierdzenie", MessageBoxButton.YesNo);
         }
     }
 }

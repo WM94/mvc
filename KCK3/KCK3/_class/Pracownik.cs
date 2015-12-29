@@ -11,5 +11,6 @@ namespace KCK3._class
         public int id { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
+        public string Email { get; set; }
     }
 }

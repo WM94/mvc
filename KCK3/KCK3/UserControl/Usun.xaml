@@ -7,7 +7,7 @@
            >
 
 
-    <Grid Name="Grid">
+    <Grid MouseDown="Grid_MouseDown" Name="Grid">
 
         <Grid.Background>
             <SolidColorBrush Color="Gray" Opacity="0"/>

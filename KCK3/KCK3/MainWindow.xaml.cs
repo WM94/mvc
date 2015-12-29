@@ -32,6 +32,7 @@ namespace KCK3
             Wydarzenia.ItemsSource = repozytorium.repozytorium.listWydarzenia;
             ListEmail.ItemsSource = repozytorium.repozytorium.listEmail;
             Pracownicy.ItemsSource = repozytorium.repozytorium.listPracownikow;
+            listFakturaZakupu.ItemsSource = repozytorium.repozytorium.listFakturaZakupu;
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);

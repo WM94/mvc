@@ -24,5 +24,12 @@ namespace KCK3.UserControl
         {
             InitializeComponent();
         }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            EditWindows.AddEditPracownik window = new EditWindows.AddEditPracownik();
+
+            window.Show();
+        }
     }
 }
